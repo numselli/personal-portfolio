@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>Photo Gallery</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+    <link href="/globalcss.css" rel="stylesheet">
+    <link href="photogallerycss.css" rel="stylesheet">
+    <script>
+      $(document).ready(async function() {
+        var aba=9999999;
+        for (var i=1; i<aba; i++) {
+          await fetch('img/'+i+'.jpg')
+          .then(response => {
+            if(response.status==200){
+              $('#container').append('<li class="li"><img src="img/'+i+'.jpg"></li>')
+            }else{
+              console.log("error "+response.status+" on image: "+i)
+              aba=i
+            }
+          })
+        }
+      })
+    </script>
+  </head>
+  <body style="background-color: #3A539B; color: #fefefe;">
+    <header>
+      <a class="logo" href="/"><img src="/logo.svg" alt="logo"></a>
+      <nav>
+          <ul class="nav__links">
+              <li><a href="/photogallery/">Photo Gallery</a></li>
+              <li><a href="/Projects/">Projects</a></li>
+              <li><a href="/About/">About</a></li>
+          </ul>
+      </nav>
+      <a class="cta" href="/Contact/">Contact</a>
+      <p class="menu cta">Menu</p>
+  </header>
+  <div class="overlay">
+      <a class="close">&times;</a>
+      <div class="overlay__content">
+        <li><a href="/photogallery/">Photo Gallery</a></li>
+        <a href="/Projects/">Projects</a>
+        <a href="/About/">About</a>
+      </div>
+  </div>
+  <script type="text/javascript" src="/mobile.js"></script>
+    <ul id="container" class="ul">
+
+    </ul>
+  </body>
+</html>

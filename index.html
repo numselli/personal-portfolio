@@ -6,12 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
-		<!-- Scripts -->
-		<!-- <script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/browser.min.js"></script>
-		<script src="assets/js/breakpoints.min.js"></script>
-		<script src="assets/js/util.js"></script>
-		<script src="assets/js/main.js"></script> -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -31,7 +26,7 @@
 				<nav>
 					<ul>
 						<li><a href="#intro">Intro</a></li>
-						<li><a href="/Photogallery">Photo Gallery</a></li>
+						<li><a href="#photogallery">Photo Gallery</a></li>
 						<li><a href="#work">Work</a></li>
 						<li><a href="#about">About</a></li>
 						<li><a href="#contact">Contact</a></li>
@@ -49,17 +44,96 @@
 						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
 					</article>
 
+					<!-- Photo gallery -->
+					<article id="photogallery" style="width:100%">
+						<h2 class="major">Photo Gallery</h2>
+						<script>			
+							const targetNode = document.getElementById('photogallery');
+							const config = {classes:true, attributes: true, childList: true, subtree: true };
+							const callback = async function(mutationsList, observer) {
+								for(const mutation of mutationsList) {
+									if (mutation.attributeName==="class") {
+										console.log(mutation.target.className)
+										if (mutation.target.className === "active"){
+											var aba=9999999999;
+											for (var i=1; i<aba; i++) {
+												await fetch('photogallery_images/'+i+'.jpg')
+												.then(response => {
+													if(response.status==200){
+														$('#imgContainer').append('<li class="li"><img src="photogallery_images/'+i+'.jpg" loading="lazy"></li>')
+													}else{
+														console.log("error "+response.status+" on image: "+i)
+														aba=i
+													}
+												})
+											}
+										}else if (mutation.target.className === ""){
+											$('#imgContainer').empty();
+										}
+									}
+								}
+							};
+							const observer = new MutationObserver(callback);
+							observer.observe(targetNode, config);
+						</script>
+						<style>
+							ul {
+								display: flex;
+								flex-wrap: wrap;
+							}
+							.li {
+								height: 40vh;
+								flex-grow: 1;
+							}
+							.li:last-child {
+								flex-grow: 10;
+							}
+							img {
+								max-height: 100%;
+								min-width: 100%;
+								object-fit: cover;
+								vertical-align: bottom;
+							}
+							@media (max-aspect-ratio: 1/1) {
+								.li {
+									height: 30vh;
+								}
+							}
+							@media (max-height: 480px) {
+								.li {
+									height: 80vh;
+								}
+							}
+							@media (max-aspect-ratio: 1/1) and (max-width: 480px) {
+								.ul {
+									flex-direction: row;
+								}
+								.li {
+									height: auto;
+									width: 100%;
+								}
+								img {
+									width: 100%;
+									max-height: 75vh;
+									min-width: 0;
+								}
+							}
+							.ol, .ul, .li{
+								list-style:none;
+								margin:0;
+								padding:0.5%;
+								border:0;
+								list-style-image: none;
+							}
+						</style>
+						<ul id="imgContainer" class="ul">
+
+						</ul>
+					</article>
+
 					<!-- Work -->
 					<article id="work">
 						<h2 class="major">Work</h2>
-						<span class="image main"><img src="images/pic02.jpg" alt="" /></span>
-						<p>Adipiscing magna sed dolor elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices.</p>
-						<p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus amet feugiat tempus.</p>
-					</article>
-
-					<!-- photogallery -->
-					<article id="photogallery">
-						<h2 class="major">Photo Gallery</h2>
 						<span class="image main"><img src="images/pic02.jpg" alt="" /></span>
 						<p>Adipiscing magna sed dolor elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices.</p>
 						<p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus amet feugiat tempus.</p>

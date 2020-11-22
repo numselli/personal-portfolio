@@ -57,65 +57,19 @@
 								for(const mutation of mutationsList) {
 									if (mutation.attributeName==="class") {
 										if (mutation.target.className === "active"){
-											
-											
-											(async () => {
-        const response = await fetch('https://api.github.com/repos/numselli/numselli.github.io/contents/');
-        const data = await response.json();
-//         let htmlString = '<ul>';
-        for (let file of data) {
-//           htmlString += `<li><a href="${file.path}">${file.name}</a></li>`;
-
-if (file.path.startsWith("/photogallery_images/")){
-															$('#photos').append(`<div id="${file.namr}"><h3 class="major">${file.name}</h3> <ul id="${file.name}ImgContainer" class="ul"></div>`)
-															var dirname=`${file.path}/${file.name}`
-															$.ajax({
-																url: $(this).children().attr("href"),
-																success: function(data){
-																	$(data).find("li")
-																	.each(function(){
-																		if ($(this).children().attr("href").split(".").length!=1){
-																			$(`#${dirname.replaceAll('%20',"")}ImgContainer`).append(`<li class="li"><img src="${$(this).children().attr("href")}" loading="lazy"></li>`)
-																		}
-																	});
-																}
-															});
-														}
-        }
-//         htmlString += '</ul>';
-//         document.getElementsByTagName('body')[0].innerHTML = htmlString;
-												
-												
-												
-												
-      })()
-											
-											
-											
-											
-// 											$.ajax({
-// 												url: "/photogallery_images/",
-// 												success: function(data){
-// 													$(data).find("li")
-// 													.each(function(){
-// 														if ($(this).children().attr("href").startsWith("/photogallery_images/")){
-// 															$('#photos').append(`<div id="${$(this).children().attr("href").split("/photogallery_images/")[1].replaceAll('%20',"")}"><h3 class="major">${$(this).children().attr("href").split("/photogallery_images/")[1].replaceAll('%20'," ")}</h3> <ul id="${$(this).children().attr("href").split("/photogallery_images/")[1].replaceAll('%20',"")}ImgContainer" class="ul"></div>`)
-// 															var dirname=$(this).children().attr("href").split("/photogallery_images/")[1]
-// 															$.ajax({
-// 																url: $(this).children().attr("href"),
-// 																success: function(data){
-// 																	$(data).find("li")
-// 																	.each(function(){
-// 																		if ($(this).children().attr("href").split(".").length!=1){
-// 																			$(`#${dirname.replaceAll('%20',"")}ImgContainer`).append(`<li class="li"><img src="${$(this).children().attr("href")}" loading="lazy"></li>`)
-// 																		}
-// 																	});
-// 																}
-// 															});
-// 														}
-// 													});
-// 												}
-// 											});
+											const response = await fetch('https://api.github.com/repos/numselli/numselli.github.io/contents/photogallery_images/');
+        										const data = await response.json();
+        										for (let file of data) {
+												$('#photos').append(`<div id="${file.name}"><h3 class="major">${file.name}</h3> <ul id="${file.name}ImgContainer" class="ul"></div>`)
+												$.ajax({
+													url: `https://api.github.com/repos/numselli/numselli.github.io/contents/${file.path}`,
+													success: function(data){
+														data.map(({item,html_url, path,name})=>{
+															$(`#${file.name.replaceAll('%20',"")}ImgContainer`).append(`<li class="li"><img src="${html_url}" loading="lazy"></li>`)
+														});
+													}
+												});
+        										}
 										}else if (mutation.target.className === ""){
 											$('#photos').empty();
 										}

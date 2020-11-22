@@ -64,8 +64,8 @@
 												$.ajax({
 													url: `https://api.github.com/repos/numselli/numselli.github.io/contents/${file.path}`,
 													success: function(data){
-														data.map(({item,html_url, path,name})=>{
-															$(`#${file.name.replaceAll('%20',"")}ImgContainer`).append(`<li class="li"><img src="${html_url}" loading="lazy"></li>`)
+														data.map(({download_url})=>{
+															$(`#${file.name.replaceAll('%20',"")}ImgContainer`).append(`<li class="li"><img src="${download_url}" loading="lazy"></li>`)
 														});
 													}
 												});

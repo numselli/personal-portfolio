@@ -145,13 +145,38 @@
 
 function logSubmit(event) {
   log.textContent = `Form Submitted! Time stamp: ${event.timeStamp}`;
-  event.preventDefault();
+
+var request = new XMLHttpRequest();
+request.open("POST", "https://discord.com/api/webhooks/779986049207762945/AOBq-yiXCk64dOg5G7V3Fp8a98fl4jidGB-kyz5r9s9JqE-kp1VpepkrNav6q2MO6Nuw");
+request.setRequestHeader('Content-type', 'application/json');
+
+var myEmbed = {
+  author: {
+    name: "Captain Hook"
+  },
+  title: "My new embed",
+  description: "This is a cool-looking Discord embed, sent directly from JavaScript!\n"+JSON.stringify(event),
+  color: hexToDecimal("#ff0000")
+}
+
+var params = {
+  username: "My Webhook Name",
+  embeds: [ myEmbed ]
+}
+
+request.send(JSON.stringify(params));
+
+
+  // event.preventDefault();
 }
 
 const form = document.getElementById('contactform');
 const log = document.getElementById('log');
 form.addEventListener('submit', logSubmit);
 
+function hexToDecimal(hex) {
+  return parseInt(hex.replace("#",""), 16)
+}
 </script>
 					</article>
 				</div>

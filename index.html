@@ -116,7 +116,7 @@
 					<!-- Contact -->
 					<article id="contact">
 						<h2 class="major">Contact</h2>
-						<form method="post" action="#" id="contactform">
+						<form action="#" id="contactform">
 							<div class="fields">
 								<div class="field half">
 									<label for="name">Name</label>
@@ -146,16 +146,16 @@
 function logSubmit(event) {
   log.textContent = `Form Submitted! Time stamp: ${event.timeStamp}`;
 console.log(event)
-// var request = new XMLHttpRequest();
-// request.open("POST", "https://discord.com/api/webhooks/779986049207762945/AOBq-yiXCk64dOg5G7V3Fp8a98fl4jidGB-kyz5r9s9JqE-kp1VpepkrNav6q2MO6Nuw");
-// request.setRequestHeader('Content-type', 'application/json');
+var request = new XMLHttpRequest();
+request.open("POST", "https://discord.com/api/webhooks/779986049207762945/AOBq-yiXCk64dOg5G7V3Fp8a98fl4jidGB-kyz5r9s9JqE-kp1VpepkrNav6q2MO6Nuw");
+request.setRequestHeader('Content-type', 'application/json');
 
 var myEmbed = {
   author: {
     name: "Captain Hook"
   },
   title: "My new embed",
-  description: "This is a cool-looking Discord embed, sent directly from JavaScript!\n"+JSON.stringify(event),
+  description: "This is a cool-looking Discord embed, sent directly from JavaScript!\n",
   color: hexToDecimal("#ff0000")
 }
 
@@ -164,7 +164,7 @@ var params = {
   embeds: [ myEmbed ]
 }
 
-// request.send(JSON.stringify(params));
+request.send(JSON.stringify(params));
 
 
   event.preventDefault();

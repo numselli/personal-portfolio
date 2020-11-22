@@ -1,13 +1,12 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>numselli's personal site</title>
+		<title>numselli's site</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<meta name="description" content="numselli's personal site">
+		<meta name="description" content="numselli's site">
 
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<!-- <noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript> -->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	</head>
 	<body class="is-preload">
@@ -116,7 +115,7 @@
 					<!-- Contact -->
 					<article id="contact">
 						<h2 class="major">Contact</h2>
-						<form action="#" id="contactform">
+						<form action="#" id="contactForm" name="contactForm" onsubmit="return sendSubmit()">
 							<div class="fields">
 								<div class="field half">
 									<label for="name">Name</label>
@@ -143,36 +142,51 @@
 
 <script>
 
-function logSubmit(event) {
-  log.textContent = `Form Submitted! Time stamp: ${event.timeStamp}`;
+function sendSubmit(event) {
+  log.textContent = `Form Submitted! Time stamp`;
 console.log(event)
 var request = new XMLHttpRequest();
 request.open("POST", "https://discord.com/api/webhooks/779986049207762945/AOBq-yiXCk64dOg5G7V3Fp8a98fl4jidGB-kyz5r9s9JqE-kp1VpepkrNav6q2MO6Nuw");
 request.setRequestHeader('Content-type', 'application/json');
 
-var myEmbed = {
-  author: {
-    name: "Captain Hook"
-  },
-  title: "My new embed",
-  description: "This is a cool-looking Discord embed, sent directly from JavaScript!\n",
-  color: hexToDecimal("#ff0000")
-}
-
 var params = {
   username: "My Webhook Name",
-  embeds: [ myEmbed ]
+  embeds: [
+{
+  "embeds": [
+    {
+      "title": "New Message",
+      "fields": [
+        {
+          "name": "Name",
+          "value": document.contactForm.name.value,
+          "inline": true
+        },
+        {
+          "name": "Email",
+          "value": document.contactForm.email.value,
+          "inline": true
+        },
+        {
+          "name": "Message",
+          "value": document.contactForm.message.value
+        }
+      ]
+    }
+  ]
+}
+  ]
 }
 
 request.send(JSON.stringify(params));
 
 
-  event.preventDefault();
+  // event.preventDefault();
 }
 
-const form = document.getElementById('contactform');
+//const form = document.getElementById('contactForm');
 const log = document.getElementById('log');
-form.addEventListener('submit', logSubmit);
+//form.addEventListener('submit', sendSubmit);
 
 function hexToDecimal(hex) {
   return parseInt(hex.replace("#",""), 16)

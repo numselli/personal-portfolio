@@ -115,7 +115,7 @@
 					<!-- Contact -->
 					<article id="contact">
 						<h2 class="major">Contact</h2>
-						<form action="#" id="contactForm" name="contactForm" onsubmit="return sendSubmit()">
+						<form action="#" id="contactForm" name="contactForm" onsubmit="sendSubmit()">
 							<div class="fields">
 								<div class="field half">
 									<label for="name">Name</label>
@@ -183,10 +183,9 @@ request.send(JSON.stringify(params));
 
   // event.preventDefault();
 }
-
-//const form = document.getElementById('contactForm');
+document.getElementById('contactForm').addEventListener('submit', sendSubmit)
 const log = document.getElementById('log');
-//form.addEventListener('submit', sendSubmit);
+
 
 function hexToDecimal(hex) {
   return parseInt(hex.replace("#",""), 16)

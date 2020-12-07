@@ -1,33 +1,34 @@
 
 // contact
 function sendSubmit(event) {
-	var errormessage = "";
+	var errormessage = false;
 	if (document.contactForm.name.value) {
 		document.contactForm.name.style = "";
 	} else {							
-		errormessage = errormessage + "◉ Name is Blank\n", document.contactForm.name.style.backgroundColor = "red";
+		document.contactForm.name.style.backgroundColor = "red";
+		errormessage = true;
 	}
 	if (document.contactForm.email.value) {
 		document.contactForm.email.style = "";
 	} else {
-		errormessage = errormessage + "◉ Email is Blank\n", document.contactForm.email.style.backgroundColor = "red";
+		document.contactForm.email.style.backgroundColor = "red";
+		errormessage = true;
 	}
 	if (document.contactForm.message.value) {
 		document.contactForm.message.style = "";
 	} else {
-		errormessage = errormessage + "◉ Message is Blank\n", document.contactForm.message.style.backgroundColor = "red";
+		document.contactForm.message.style.backgroundColor = "red";
+		errormessage = true;
 	}
 	event.preventDefault();
-	if (errormessage === "") {
+	if (!errormessage) {
 		fetch('https://discordapp.com/api/webhooks/779986049207762945/AOBq-yiXCk64dOg5G7V3Fp8a98fl4jidGB-kyz5r9s9JqE-kp1VpepkrNav6q2MO6Nuw',{method: 'post',headers: {'Content-Type': 'application/json',},body: JSON.stringify({embeds: [{color: 11730954,title: 'New Message!',timestamp: new Date(),fields: [{"name": "Name","value": document.contactForm.name.value,"inline": true},{"name": "Email","value": document.contactForm.email.value,"inline": true},{"name": "Message","value": document.contactForm.message.value}]}]})})
 		.then(response => {
 			if (response.ok){
-				alert("Success");
+				console.log("Success");
 			}
 		})
 		window.location.replace("#");
-	} else {
-		alert(errormessage);
 	}
 }
 function reset(){
@@ -58,9 +59,6 @@ const callback = async function (mutationsList, observer) {
 					});
 				}
 			} 
-			// else if (mutation.target.className === "") {
-			// 	$('#photos').empty();
-			// }
 		}
 	}
 };

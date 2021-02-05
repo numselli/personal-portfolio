@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
@@ -6,78 +6,244 @@
 		<meta name="description" content="Compete with other Discord servers to get the highest count.">
 		<title>Counting</title>
 		<link rel="shortcut icon" href="assets/img/counticon.png" type="image/x-icon" />
-		<script type="text/javascript" src="/assets/js/jquery-3.5.1.min.js"></script>
+		<script src="/assets/js/jquery.min.js"></script>
 		<script async src="https://arc.io/widget.min.js#vjBL7bu4"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+
+		<!-- custom css and js -->
 		<style>
 			a:link,a:visited,a:hover {color:white;background-color: transparent;text-decoration: none;}
 			.button {color: #ffffff !important;text-transform: uppercase;background: #6c6c6c58;padding: 20px;border: 4px solid #ff0066 !important;border-radius: 6px;display: inline-block;transition: all 0.3s ease 0s;}
 			.button:hover {color: #ffffff !important;border-radius: 50px;border-color: #ff0066 !important;transition: all 0.3s ease 0s;}
 			.button:link,.button:visited {text-decoration: none;}
+				
 			table{width: 50%;height: 95%; background-color:#aaaaaa; margin: 0 auto;}
 			.sortbutton {justify-content: center;background: #102E3B;color: #f9f9f8;}
 			.sortbutton:hover, .sortbutton a:hover {background: #4d4e4f;color: #f9f9f8;border: #4d4e4f;}
 			.sortbutton a {background: #102E3B;padding: 7px 35px;font-size: 16px;color: #f9f9f8;border: #102E3B;}
 			.guildimg{vertical-align: middle;max-height: 100px;max-width: 100px;}
 			.tr{background-color:#d2d2d2;outline: 0.5px solid #000000;}
-			td{text-align: center;}
+			td{text-align: center; color: #000000;}
 			.tr:nth-child(odd){background-color:#aaaaaa;outline: 0.5px solid #000000;}
 
 			html,body{background-color: #001040; overflow-x: hidden; width: 100%;height: 100%; margin:0;}
 			html::-webkit-scrollbar {display: none;}
 			html{-ms-overflow-style: none;scrollbar-width: none;}
+
+			.home{padding-bottom: 15%;}
 		</style>
+		<script>
+			$(document).ready(pageLoad);
+			$(window).bind('hashchange', pageLoad);
+
+			// headder, title adujust
+			async function pageLoad(){
+				switch((window.location.hash).replace("#","")){
+					case `scores`:
+						$("#title").text("SCORES")
+						document.title = "Scores"
+						$("#main").removeClass("home");
+
+						if ($("#tablebody").find("tr").length<=0){
+							await updatedata("scores")
+							tabledata.map(({url,name,cs,hs})=>{
+								var {innerHTML} = document.getElementById('tablebody')
+								innerHTML += `<tr class="tr"><td><img class="guildimg" src="${url}" alt="${name}'s guild icon" style="border-radius: 50%; width:40px;" loading="lazy" onError="this.onerror=null;this.src='assets/img/error.png';"></td><td>${name}</td><td>${cs}</td><td>${hs}</td></tr>`;
+								document.getElementById('tablebody').innerHTML = innerHTML;
+							})
+						}else{
+							var tablebody = document.getElementById('tablebody').innerHTML;
+							document.getElementById('tablebody').innerHTML = "";
+							document.getElementById('tablebody').innerHTML = tablebody;
+						}
+					break;
+					case `userscores`:
+						$("#title").text("USER SCORES")
+						document.title = "User scores"
+						$("#main").removeClass("home");
+
+
+						if ($("#userScoresTableBody").find("tr").length<=0){
+							await updatedata("users")
+							var index = 0, tempArray = [];
+							for (index = 0; index < tabledata.length; index += 10) {
+								myChunk = tabledata.slice(index, index+10);
+								if (index<=30){
+									myChunk.forEach(({rank, username, correctnumbers, total}) => {
+										var {innerHTML} = document.getElementById('userScoresTableBody')
+										document.getElementById('userScoresTableBody').innerHTML = innerHTML + `<tr class="tr"><td>${rank}</td><td>${username}</td><td>${correctnumbers}</td><td>${total}</td></tr>`;
+									});						
+								}else{
+									tempArray.push(myChunk);
+								}
+							}
+						}
+					break;
+					default:
+						$("#main").addClass("home");
+						$("#title").text("COUNTING")
+						document.title = "Counting"
+					break;
+				}
+			}
+
+			// scores table
+			var tabledata = [], sortdirection = false;
+
+			async function updatedata(table) {
+				var ajaxdata = await $.ajax({'cache': true, 'dataType': "json", "async": true, "crossDomain": true, "url": `https://d46de9ca877e.ngrok.io/get/${table}`, "method": "GET", "error":err=>{console.error("Cannot connect to the API",err)},"headers": { "accept": "application/json", "Access-Control-Allow-Origin": "*"}})
+				tabledata = ajaxdata
+				return ajaxdata
+			}
+
+			async function sortdata(columnname, tablename){
+				await updatedata(tablename);
+				
+				switch(tablename){
+					case `scores`:
+						var sortdatahtml = "";
+						sortdirection = !sortdirection;
+						switch (columnname) {
+							case "name":
+								tabledata = tabledata.sort((p1, p2) => {
+									return sortdirection ? (p1[columnname] > p2[columnname]) - (p1[columnname] < p2[columnname]) : (p2[columnname] > p1[columnname]) - (p2[columnname] < p1[columnname]);
+								});
+								document.getElementById('Namearrow').classList = sortdirection ? 'fa fa-sort-up' : 'fa fa-sort-down'
+								document.getElementById('last_numarrow').classList = '';
+								document.getElementById('hsarrow').classList = '';
+							break;
+							case "cs":
+							case "hs":
+								tabledata = tabledata.sort((p1, p2) => {
+									return sortdirection ? p1[columnname] - p2[columnname] : p2[columnname] - p1[columnname];
+								});
+								if (columnname == "cs") {
+									document.getElementById('last_numarrow').classList = sortdirection ? 'fa fa-sort-up' : 'fa fa-sort-down'
+									document.getElementById('Namearrow').classList = '';
+									document.getElementById('hsarrow').classList = '';
+								}else {
+									document.getElementById('hsarrow').classList = sortdirection ? 'fa fa-sort-up' : 'fa fa-sort-down'
+									document.getElementById('Namearrow').classList = '';
+									document.getElementById('last_numarrow').classList = '';
+								}
+							break;
+						}
+						tabledata.map(data=>{
+							sortdatahtml += `<tr class="tr"><td><img class="guildimg" src="${data.url}"style="border-radius: 50%; width:40px;"></td><td>${data.name}</td><td>${data.cs}</td><td>${data.hs}</td></tr>`;
+						})
+						document.getElementById('tablebody').innerHTML = sortdatahtml;
+					break;
+				}
+			}
+		</script>
 	</head>
-	<body class="is-preload" align="center" id="wrapper" style="height: 100%; 	position:relative; min-height:105%;	">
-		<!-- header -->
-		<div align="center" style="color: #ffffff; position: relative; width: 100%; top: 0; left: 0; right: 0;">
-			<a href="#"><img style="max-width:100%;width:100px;padding-top:20px" alt="Counting's logo"src="assets/img/counticon.png"></a>
-			<h1 id="title">COUNTING</h1>
+
+	<body>
+		<!-- Wrapper-->
+		<div>
+			<!-- Nav -->
+			<nav id="nav">
+				<a href="#"><img style="max-width:100%;width:100px;" alt="Counting's logo"src="assets/img/counticon.png"></a>
+				<h1 id="title">COUNTING</h1>
+			</nav>
+
+			<!-- Main -->
+			<div id="main" style="height: 100%; width: 100%; margin: 0 auto;" class="home">
+				<!-- Me -->
+				<article id="home" class="panel intro" style="width: 100%;">
+					<nav align="center" id="nav" style="width: 50%; margin: 0 auto; padding-top: 6%;">
+						<div style="float: left; padding-left: 16%;"><a class="button"href="https://discord.com/oauth2/authorize?client_id=726560538145849374&scope=bot&permissions=3136"rel="nofollow noopener" target="_blank">INVITE</a></div>
+						<div style="float: right; padding-right: 16%;"><a class="button" href="#scores">SCORES</a></div>
+					<nav>
+				</article>
+
+				<!-- guild socres -->
+				<article id="scores" class="panel" style="width: 100%; margin: 0 auto;">
+					<table>
+						<thead>						
+							<tr><th class="sortbutton" colspan="2" onclick="window.location.hash = 'userscores'">User scores</th><th class="sortbutton" colspan="2" onclick="window.location.hash = 'scores'">Channel scores</th></tr>
+							<tr><th class="sortbutton">Icon</th><th onclick="sortdata('name', 'scores')" class="sortbutton">Name <i id="Namearrow" class=""></i></th><th onclick="sortdata('cs', 'scores')" class="sortbutton">Current Score <i id="last_numarrow" class=""></i></th><th onclick="sortdata('hs', 'scores')" class="sortbutton">High Score <i id="hsarrow" class=""></i></th></tr>
+						</thead>
+						<tbody id='tablebody'>
+						</tbody>
+					</table>
+				</article>
+				<!-- user scores -->
+				<article id="userscores" class="panel" style="width: 100%; margin: 0 auto;">
+					<table>
+						<thead>
+							<tr><th class="sortbutton" colspan="2" onclick="window.location.hash = 'userscores'">User scores</th><th class="sortbutton" colspan="2" onclick="window.location.hash = 'scores'">Channel scores</th></tr>
+							<tr>
+								<th class="sortbutton">Rank</th>
+								<th class="sortbutton">Username <i id="Namearrow" class=""></i></th>
+								<th class="sortbutton">Correct <i id="last_numarrow" class=""></i></th>
+								<th class="sortbutton">Total <i id="hsarrow" class=""></i></th>
+							</tr>
+						</thead>
+						<tbody id='userScoresTableBody'>
+						</tbody>
+					</table>
+				</article>
+			</div>
+
+			<!-- Footer -->
+			<div id="footer">
+				<div align="center"style="position:relative; bottom:0; width:100%; text-align:center; flex-shrink: 0;">
+					<div style="padding-bottom: 0.5%;"><a href="https://discord.gg/cz5ECsdPBT" rel="nofollow noopener" title="Join the discord." target="_blank"class="joindiscordserver"><i class="fab fa-discord fa-lg"></i></a></div>
+					<div style="padding-top: 0.5%;"><a href="https://numselli.github.io" rel="nofollow noopener" title="My site." target="_blank"><span align="center">Made by numselli#6964</span></a></div>
+				</div>
+			</div>
 		</div>
-		<!-- nav buttons -->
-		<div align="center" id="nav" style="width: 50%; margin: 0 auto; padding-top: 6%;">
-			<div style="float: left; padding-left: 16%;"><a class="button"href="https://discord.com/oauth2/authorize?client_id=726560538145849374&scope=bot&permissions=3136"rel="nofollow noopener" target="_blank">INVITE</a></div>
-			<div style="float: right; padding-right: 16%;"><a class="button" href="#scores">SCORES</a></div>
-		</div>
-		<!-- content -->
-		<div align="center" id="main" style="height: 100%; width: 100%; margin: 0 auto; padding-top: 6%; padding-bottom: 15%;">
-			<!-- guild socres -->
-			<article id="scores" style="width: 100%; margin: 0 auto;">
-				<table>
-					<thead><tr>
-						<th class="sortbutton">Icon</th>
-						<th onclick="sortdata('name')" class="sortbutton">Name <i id="Namearrow" class=""></i></th>
-						<th onclick="sortdata('cs')" class="sortbutton">Current Score <i id="last_numarrow" class=""></i></th>
-						<th onclick="sortdata('hs')" class="sortbutton">High Score <i id="hsarrow" class=""></i></th>
-						</tr></thead>
-					<tbody id='tablebody'>
-					</tbody>
-				</table>
-			</article>
-			<!-- user scores -->
-			<article id="userscores" style="width: 100%; margin: 0 auto;">
-				<table>
-					<thead><tr>
-						<!-- <th class="sortbutton">Rank</th> -->
-						<th class="sortbutton">Username <i id="Namearrow" class=""></i></th>
-						<th class="sortbutton">Correct <i id="last_numarrow" class=""></i></th>
-						<th class="sortbutton">Incorrect <i id="hsarrow" class=""></i></th>
-						<!-- <th class="sortbutton">Total <i id="hsarrow" class=""></i></th> -->
-						</tr></thead>
-					<tbody id='userScoresTableBody'>
-					</tbody>
-				</table>
-			</article>
-		</div>
-		<!-- footer -->
-		<div align="center"style="position:relative; bottom:0; width:100%; color: #ffffff; text-align:center; flex-shrink: 0;padding-bottom: 3%;">
-			<div style="padding-bottom: 0.5%;"><a href="https://discord.gg/cz5ECsdPBT" rel="nofollow noopener" title="Join the discord." target="_blank"class="joindiscordserver"><i class="fab fa-discord fa-lg"></i></a></div>
-			<div style="padding-top: 0.5%;"><a href="https://numselli.github.io" rel="nofollow noopener" title="My site." target="_blank"><span align="center">Made by numselli#6964</span></a></div>
-		</div>
-		<!-- assets -->
-		<script src="assets/js/browser.min.js"></script>
-		<script src="assets/js/main.js"></script>
-		<script src="/assets/js/fontawesome.js"></script>
-		<script src="https://getinsights.io/js/insights.js"></script>
-		<script>insights.init('myD4woT_qCdSytjV');insights.trackPages();</script>
+
+		<!-- template js -->
+		<script>
+			var breakpoints=function(){"use strict";function e(e){t.init(e)}var t={list:null,media:{},events:[],init:function(e){t.list=e,window.addEventListener("resize",t.poll),window.addEventListener("orientationchange",t.poll),window.addEventListener("load",t.poll),window.addEventListener("fullscreenchange",t.poll)},active:function(e){var n,a,s,i,r,d,c;if(!(e in t.media)){if(">="==e.substr(0,2)?(a="gte",n=e.substr(2)):"<="==e.substr(0,2)?(a="lte",n=e.substr(2)):">"==e.substr(0,1)?(a="gt",n=e.substr(1)):"<"==e.substr(0,1)?(a="lt",n=e.substr(1)):"!"==e.substr(0,1)?(a="not",n=e.substr(1)):(a="eq",n=e),n&&n in t.list)if(i=t.list[n],Array.isArray(i)){if(r=parseInt(i[0]),d=parseInt(i[1]),isNaN(r)){if(isNaN(d))return;c=i[1].substr(String(d).length)}else c=i[0].substr(String(r).length);if(isNaN(r))switch(a){case"gte":s="screen";break;case"lte":s="screen and (max-width: "+d+c+")";break;case"gt":s="screen and (min-width: "+(d+1)+c+")";break;case"lt":s="screen and (max-width: -1px)";break;case"not":s="screen and (min-width: "+(d+1)+c+")";break;default:s="screen and (max-width: "+d+c+")"}else if(isNaN(d))switch(a){case"gte":s="screen and (min-width: "+r+c+")";break;case"lte":s="screen";break;case"gt":s="screen and (max-width: -1px)";break;case"lt":s="screen and (max-width: "+(r-1)+c+")";break;case"not":s="screen and (max-width: "+(r-1)+c+")";break;default:s="screen and (min-width: "+r+c+")"}else switch(a){case"gte":s="screen and (min-width: "+r+c+")";break;case"lte":s="screen and (max-width: "+d+c+")";break;case"gt":s="screen and (min-width: "+(d+1)+c+")";break;case"lt":s="screen and (max-width: "+(r-1)+c+")";break;case"not":s="screen and (max-width: "+(r-1)+c+"), screen and (min-width: "+(d+1)+c+")";break;default:s="screen and (min-width: "+r+c+") and (max-width: "+d+c+")"}}else s="("==i.charAt(0)?"screen and "+i:i;t.media[e]=!!s&&s}return t.media[e]!==!1&&window.matchMedia(t.media[e]).matches},on:function(e,n){t.events.push({query:e,handler:n,state:!1}),t.active(e)&&n()},poll:function(){var e,n;for(e=0;e<t.events.length;e++)n=t.events[e],t.active(n.query)?n.state||(n.state=!0,n.handler()):n.state&&(n.state=!1)}};return e._=t,e.on=function(e,n){t.on(e,n)},e.active=function(e){return t.active(e)},e}();!function(e,t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?module.exports=t():e.breakpoints=t()}(this,function(){return breakpoints});
+			(function ($) {
+				var $window = $(window),$main = $('#main'),$panels = $main.children('.panel'),$nav = $('#nav'), $nav_links = $nav.children('a');
+				breakpoints({xlarge: ['1281px', '1680px'],large: ['981px', '1280px'],medium: ['737px', '980px'],small: ['361px', '736px'],xsmall: [null, '360px']});
+				// Initialize
+				var $panel, $link;
+				if (window.location.hash) {
+					$panel = $panels.filter(window.location.hash);
+					$link = $nav_links.filter(`[href="${window.location.hash}"]`);
+				}
+				if (!$panel|| $panel.length == 0) {
+					$panel = $panels.first();
+					$link = $nav_links.first();
+				}
+				$panels.not($panel).addClass('inactive').hide();
+				$link.addClass('active');
+				$window.scrollTop(0);
+
+				// Hashchange event.
+				$window.on('hashchange', function (event) {
+					var $panel, $link;
+					if (window.location.hash) {
+						$panel = $panels.filter(window.location.hash);
+						$link = $nav_links.filter(`[href="${window.location.hash}"]`);
+						if ($panel.length == 0)
+							return;
+					}else {
+						$panel = $panels.first();
+						$link = $nav_links.first();
+					}
+					$panels.addClass('inactive');
+					$nav_links.removeClass('active');
+					$link.addClass('active');
+					$main.css('max-height', `${$main.height()}px`).css('min-height', `${$main.height()}px`);
+					setTimeout(function () {
+						$panels.hide();
+						$panel.show();
+						$main.css('max-height', `${$panel.outerHeight()}px`).css('min-height', `${$panel.outerHeight()}px`);
+						$window.scrollTop(0);
+						window.setTimeout(function () {
+							$panel.removeClass('inactive');
+							$main.css('max-height', '').css('min-height', '');
+							locked = false;
+						}, (breakpoints.active('small') ? 0 : 500));
+					}, 250);
+				});
+			})(jQuery);
+		</script>
 	</body>
 </html>

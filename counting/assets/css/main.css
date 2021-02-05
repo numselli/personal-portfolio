@@ -1,0 +1,169 @@
+@import url("/assets/css/fontawesome-all.min.css");
+
+html, body, div, span, h1, img, article, footer, header, nav, section {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	color: white;
+}
+article, footer, header, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+	-webkit-text-size-adjust: none;
+	overflow-y: scroll;
+}
+
+/* Basic */
+html {
+	box-sizing: border-box;
+}
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+@media screen and (max-width: 1680px) {
+	body {
+		font-size: 15pt;
+	}
+}
+@media screen and (max-width: 1280px) {
+	body {
+		font-size: 14pt;
+	}
+}
+@media screen and (max-width: 736px) {
+	body {
+		font-size: 12pt;
+	}
+}
+@media screen and (max-width: 360px) {
+	body{
+		font-size: 11pt;
+	}
+}
+h1 {
+	font-size: 2.4em;
+	letter-spacing: -0.015em;
+	font-weight: 400;
+}
+@media screen and (max-width: 736px) {
+	h1 {
+		font-size: 1.75em;
+	}
+}
+
+/* Section/Article */
+section, article {
+	margin-bottom: 3em;
+}
+section > :last-child, section:last-child, article > :last-child, article:last-child {
+	margin-bottom: 0;
+}
+
+/* Nav */
+#nav {
+	text-align: center;
+	cursor: default;
+}
+#nav a.icon:before {
+	padding-right: 0;
+}
+#nav a:before {
+	font-size: 0.8em;
+}
+#nav a:after {
+	content: '';
+	display: block;
+	position: absolute;
+	left: 50%;
+	bottom: -0.75em;
+	margin-left: -0.5em;
+	border-bottom: solid 0em #ffffff;
+	border-left: solid 0.5em transparent;
+	border-right: solid 0.5em transparent;
+	-moz-transition: border-bottom-width .25s ease-in-out;
+	-webkit-transition: border-bottom-width .25s ease-in-out;
+	-ms-transition: border-bottom-width .25s ease-in-out;
+	transition: border-bottom-width .25s ease-in-out;
+}
+#nav a:hover {
+	opacity: 1.0;
+}
+#nav a:hover span {
+	opacity: 1.0;
+}
+#nav a.active {
+	opacity: 1.0;
+}
+#nav a.active:after {
+	border-bottom-width: 0.5em;
+}
+@media screen and (max-width: 980px) {
+	#nav a span {
+		display: none;
+	}
+}
+
+/* Main */
+#main {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	-moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+	-webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+	-ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+	transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+}
+#main > .panel {
+	-moz-transition: opacity 0.25s ease-in-out;
+	-webkit-transition: opacity 0.25s ease-in-out;
+	-ms-transition: opacity 0.25s ease-in-out;
+	transition: opacity 0.25s ease-in-out;
+	margin-bottom: 0;
+	position: relative;
+	padding: 3.5em 2.5em 2.5em 2.5em;
+	width: 100%;
+}
+#main > .panel.inactive {
+	opacity: 0;
+}
+@media screen and (max-width: 736px) {
+	#main > .panel {
+		padding: 2em 1.5em 1.5em 1.5em;
+	}
+}
+#main > .panel.intro {
+	padding: 0;
+	display: -moz-flex;
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: flex;
+	-moz-flex-direction: row;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-moz-align-items: center;
+	-webkit-align-items: center;
+	-ms-align-items: center;
+	align-items: center;
+}
+#main > .panel.intro header h1 {
+	line-height: 1.25em;
+	margin-bottom: 0;
+}
+#main > .panel.intro header p {
+	letter-spacing: -0.015em;
+	font-size: 1.25em;
+	margin: 0.25em 0 0 0;
+}
+
+/* Footer */
+#footer {
+	text-align: center;
+	padding: 2em 0 0 0;
+	font-size: 0.75em;
+}

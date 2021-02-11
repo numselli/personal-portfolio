@@ -92,7 +92,7 @@
 			var tabledata = [], sortdirection = false;
 
 			async function updatedata(table) {
-				var ajaxdata = await $.ajax({'cache': true, 'dataType': "json", "async": true, "crossDomain": true, "url": `https://d46de9ca877e.ngrok.io/get/${table}`, "method": "GET", "error":err=>{console.error("Cannot connect to the API",err)},"headers": { "accept": "application/json", "Access-Control-Allow-Origin": "*"}})
+				var ajaxdata = await $.ajax({'cache': true, 'dataType': "json", "async": true, "crossDomain": true, "url": `https://bd9d7cd31525.ngrok.io/get/${table}`, "method": "GET", "error":err=>{console.error("Cannot connect to the API",err)},"headers": { "accept": "application/json", "Access-Control-Allow-Origin": "*"}})
 				tabledata = ajaxdata
 				return ajaxdata
 			}

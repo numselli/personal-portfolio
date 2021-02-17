@@ -344,8 +344,8 @@
 					// init photogallery
 					case `photogallery`:
 						(await (await fetch('https://api.github.com/repos/numselli/numselli.github.io/contents/images/photogallery/')).json())
-						.map(({download_url, name}) => {
-							$('#image-container').append(`<li class="li"><img src="${download_url}" alt="${name}" loading="lazy"></li>`)
+						.map(({name}) => {
+							$('#image-container').append(`<li class="li"><img src="https://numselli.github.io/images/photogallery/${name}" alt="${name}" loading="lazy"></li>`)
 						});
 					break;
 				}

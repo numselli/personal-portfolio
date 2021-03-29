@@ -75,21 +75,6 @@ section > :last-child, section:last-child, article > :last-child, article:last-c
 #nav a:before {
 	font-size: 0.8em;
 }
-#nav a:after {
-	content: '';
-	display: block;
-	position: absolute;
-	left: 50%;
-	bottom: -0.75em;
-	margin-left: -0.5em;
-	border-bottom: solid 0em #ffffff;
-	border-left: solid 0.5em transparent;
-	border-right: solid 0.5em transparent;
-	-moz-transition: border-bottom-width .25s ease-in-out;
-	-webkit-transition: border-bottom-width .25s ease-in-out;
-	-ms-transition: border-bottom-width .25s ease-in-out;
-	transition: border-bottom-width .25s ease-in-out;
-}
 #nav a:hover {
 	opacity: 1.0;
 }
@@ -159,11 +144,4 @@ section > :last-child, section:last-child, article > :last-child, article:last-c
 	letter-spacing: -0.015em;
 	font-size: 1.25em;
 	margin: 0.25em 0 0 0;
-}
-
-/* Footer */
-#footer {
-	text-align: center;
-	padding: 2em 0 0 0;
-	font-size: 0.75em;
 }

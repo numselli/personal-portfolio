@@ -5,20 +5,23 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="Compete with other Discord servers to get the highest count.">
 		<title>Counting</title>
-		<link rel="shortcut icon" href="assets/img/counticon.png" type="image/x-icon" />
-		<script src="/assets/js/jquery.min.js"></script>
+		<link rel="icon" href="assets/img/counticon.png" type="image/x-icon"/>
+		<script src="assets/js/jquery.min.js"></script>
 		<script async src="https://arc.io/widget.min.js#vjBL7bu4"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<meta name="theme-color" content="#e00051">
 		<script src="https://getinsights.io/js/insights.js"></script>
 		<script>
 			insights.init("myD4woT_qCdSytjV")
 			insights.trackPages()
 		</script>
 
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<meta name="theme-color" content="#e00051">
-
 		<!-- custom css and js -->
 		<style>
+			html,body{background-color: #001040; overflow-x: hidden; width: 100%;height: 100%; margin:0;}
+			html::-webkit-scrollbar {display: none;}
+			html{-ms-overflow-style: none;scrollbar-width: none;}
+
 			a:link,a:visited,a:hover {color:white;background-color: transparent;text-decoration: none;}
 			.button {color: #ffffff !important;text-transform: uppercase;background: #6c6c6c58;padding: 20px;border: 4px solid #ff0066 !important;border-radius: 6px;display: inline-block;transition: all 0.3s ease 0s;}
 			.button:hover {color: #ffffff !important;border-radius: 50px;border-color: #ff0066 !important;transition: all 0.3s ease 0s;}
@@ -28,14 +31,11 @@
 			.sortbutton {justify-content: center;background: #102E3B;color: #f9f9f8;}
 			.sortbutton:hover, .sortbutton a:hover {background: #4d4e4f;color: #f9f9f8;border: #4d4e4f;}
 			.sortbutton a {background: #102E3B;padding: 7px 35px;font-size: 16px;color: #f9f9f8;border: #102E3B;}
-			.guildimg{vertical-align: middle;max-height: 100px;max-width: 100px;}
 			.tr{background-color:#d2d2d2;outline: 0.5px solid #000000;}
 			td{text-align: center; color: #000000;}
 			.tr:nth-child(odd){background-color:#aaaaaa;outline: 0.5px solid #000000;}
 
-			html,body{background-color: #001040; overflow-x: hidden; width: 100%;height: 100%; margin:0;}
-			html::-webkit-scrollbar {display: none;}
-			html{-ms-overflow-style: none;scrollbar-width: none;}
+			.guildimg{vertical-align: middle;max-height: 100px;max-width: 100px;}
 
 			.home{padding-bottom: 15%;}
 		</style>
@@ -43,49 +43,88 @@
 			$(document).ready(pageLoad);
 			$(window).bind('hashchange', pageLoad);
 
+			// set golabl vars
+			var gloabldata = {
+				"APIurl":`https://bd9d7cd31525.ngrok.io`,
+				"scorestabledata":[],
+				"scorestabledatasortdirection": false,
+				"userscorestabledata":[],
+				"usertabledatasortdirection": false,
+				"commonguilds":{}
+			}
+
 			// headder, title adujust
 			async function pageLoad(){
+				// if (($("#login")[0].innerHTML=="Login")){
+				// 	document.getElementById("login").href=`${gloabldata.APIurl}/get/login`;
+
+				// 	const userdatajson = await getAPIdata("user")
+				// 	if (userdatajson){
+				// 		$("#login").removeClass("button").attr("href", "#user").html(`<img src="https://cdn.discordapp.com/avatars/${userdatajson.id}/${userdatajson.avatarHash}" alt="${userdatajson.tag}'s profile picture" style="border-radius: 50%; width:40px;">`)
+				// 		$('#userID').append(`<img src="https://cdn.discordapp.com/avatars/${userdatajson.id}/${userdatajson.avatarHash}" alt="${userdatajson.tag}'s profile picture" style="border-radius: 50%; width:100px;"><h3>${userdatajson.tag}</h3>`)
+				// 	}
+				// }
+			
 				switch((window.location.hash).replace("#","")){
 					case `scores`:
 						$("#title").text("SCORES")
 						document.title = "Scores"
 						$("#main").removeClass("home");
-
-						if ($("#tablebody").find("tr").length<=0){
-							await updatedata("scores")
-							tabledata.map(({url,name,cs,hs})=>{
-								var {innerHTML} = document.getElementById('tablebody')
-								innerHTML += `<tr class="tr"><td><img class="guildimg" src="${url}" alt="${name}'s guild icon" style="border-radius: 50%; width:40px;" loading="lazy" onError="this.onerror=null;this.src='assets/img/error.png';"></td><td>${name}</td><td>${cs}</td><td>${hs}</td></tr>`;
-								document.getElementById('tablebody').innerHTML = innerHTML;
-							})
-						}else{
-							var tablebody = document.getElementById('tablebody').innerHTML;
-							document.getElementById('tablebody').innerHTML = "";
-							document.getElementById('tablebody').innerHTML = tablebody;
+						if ($("#scoresTableBody").find("tr").length<=0){
+							gloabldata.scorestabledata = await getAPIdata("scores")
+							if (gloabldata.scorestabledata){
+								gloabldata.scorestabledata.map(({url,name,cs,hs})=>{
+									$('#scoresTableBody').append(`<tr class="tr"><td><img class="guildimg" src="${url}" alt="${name}'s guild icon" style="border-radius: 50%; width:40px;" loading="lazy" onError="this.onerror=null;this.src='assets/img/error.png';"></td><td>${name}</td><td>${cs}</td><td>${hs}</td></tr>`);
+								})
+							}
 						}
 					break;
 					case `userscores`:
 						$("#title").text("USER SCORES")
 						document.title = "User scores"
 						$("#main").removeClass("home");
-
-
-						if ($("#userScoresTableBody").find("tr").length<=0){
-							await updatedata("users")
-							var index = 0, tempArray = [];
-							for (index = 0; index < tabledata.length; index += 10) {
-								myChunk = tabledata.slice(index, index+10);
-								if (index<=30){
-									myChunk.forEach(({rank, username, correctnumbers, total}) => {
-										var {innerHTML} = document.getElementById('userScoresTableBody')
-										document.getElementById('userScoresTableBody').innerHTML = innerHTML + `<tr class="tr"><td>${rank}</td><td>${username}</td><td>${correctnumbers}</td><td>${total}</td></tr>`;
-									});						
-								}else{
-									tempArray.push(myChunk);
-								}
-							}
+						if ($("#userscoresTableBody").find("tr").length<=0){
+							gloabldata.userscorestabledata = (await getAPIdata("userscores")).slice(0, 50)
+							gloabldata.userscorestabledata.forEach(async({userscoresrank, userscoresname, userscorestotal}) => {
+								$('#userscoresTableBody').append(`<tr><td>${userscoresrank}</td><td>${userscoresname}</td><td>${userscorestotal}</td></tr>`);
+							})
 						}
 					break;
+					// case `user`:
+					// 	$("#title").text("USER")
+					// 	document.title = "User"
+					// 	await $("#main").removeClass("home");
+					// 	if ($("#guildList").children().length==1){
+					// 		gloabldata.commonguilds = await getAPIdata("userguilds")
+					// 		for (const commonGuild in gloabldata.commonguilds.guilds) {
+					// 			$("#guildList").append(`<div style="flex: 0 0 calc(16.66% - 40px); text-align: center; margin: 10px;"><a onclick="showguild('${gloabldata.commonguilds.guilds[commonGuild].guildINFO.id}')" style="cursor: pointer;"><img src="${gloabldata.commonguilds.guilds[commonGuild].guildINFO.iconhash ? `https://cdn.discordapp.com/icons/${gloabldata.commonguilds.guilds[commonGuild].guildINFO.id}/${gloabldata.commonguilds.guilds[commonGuild].guildINFO.iconhash}`: gloabldata.commonguilds.guilds[commonGuild].guildINFO.fallbackicon}" alt="${gloabldata.commonguilds.guilds[commonGuild].guildINFO.name}'s icon" style="border-radius: 50%; width:95px;"></a><figcaption>${gloabldata.commonguilds.guilds[commonGuild].guildINFO.name}</figcaption></div>`)
+					// 		}
+					// 		$(`#userID`).append(`
+					// 			<p>
+					// 				Correct Numbers: ${gloabldata.commonguilds.userscores.correctnumbers}<br>
+					// 				Wrong Numbers: ${gloabldata.commonguilds.userscores.wrongnumbers}<br>
+					// 				Total Numbers: ${gloabldata.commonguilds.userscores.correctnumbers+gloabldata.commonguilds.userscores.wrongnumbers}<br>
+					// 				Saves: ${gloabldata.commonguilds.userscores.saves}/${gloabldata.commonguilds.userscores.maxSaves}<br>
+					// 				Saves Uses: ${gloabldata.commonguilds.userscores.savednumbers}<br>
+					// 				Premium level: ${gloabldata.commonguilds.userscores.premiumlevel}<br>
+					// 				Banned: ${gloabldata.commonguilds.userscores.isbanned}
+					// 			</p>
+					// 		`)
+					// 	}
+					// break;
+					case `privacy`:
+						$("#title").text("PRIVACY")
+						document.title = "PRIVACY"
+						$("#main").removeClass("home");
+					break;
+					case `countingCheates`:
+						let randomVideos = [
+							"https://www.youtube.com/watch?v=jeg_TJvkSjg",
+							"https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+						]
+						window.location.replace(randomVideos[Math.floor(Math.random() * randomVideos.length)]);
+					break;
+					
 					default:
 						$("#main").addClass("home");
 						$("#title").text("COUNTING")
@@ -94,53 +133,95 @@
 				}
 			}
 
-			// scores table
-			var tabledata = [], sortdirection = false;
+			// async function showguild(guildid){
+			// 	$('#guildList').hide()
+			// 	$(`#${guildid}`).show()
+			// 	$('#userID').hide() 
+			// 	if($(`#${guildid}`).length == 0){
+			// 		$('#guilds').append(`
+			// 			<div id="${guildid}">
+			// 				<div style="with:100%; vertical-align: top;">
+			// 					<a class="button" onclick="$('#${guildid}').hide(); $('#userID').show(); $('#guildList').show()" style="float: right;">back</a>
+			// 					<div style="text-align:center; float:left;">
+			// 						<img src="${gloabldata.commonguilds.guilds[guildid].guildINFO.iconhash ? `https://cdn.discordapp.com/icons/${gloabldata.commonguilds.guilds[guildid].guildINFO.id}/${gloabldata.commonguilds.guilds[guildid].guildINFO.iconhash}`: gloabldata.commonguilds.guilds[guildid].guildINFO.fallbackicon}" alt="${gloabldata.commonguilds.guilds[guildid].guildINFO.name}'s icon" style="border-radius: 50%; width:95px;">
+			// 						<figcaption>${gloabldata.commonguilds.guilds[guildid].guildINFO.name}</figcaption>
+			// 					</div>
+			// 				<div>
+			// 				<div id="${guildid}channels" style="with:50%; display: grid;  grid-template-columns: repeat(auto-fill, minmax(10em, 10em)); grid-column-gap: 10px; justify-content: center; display: flex; flex-wrap: wrap; ">
+			// 				</div>
+			// 			</div>
+			// 		`)
 
-			async function updatedata(table) {
-				var ajaxdata = await $.ajax({'cache': true, 'dataType': "json", "async": true, "crossDomain": true, "url": `https://bd9d7cd31525.ngrok.io/get/${table}`, "method": "GET", "error":err=>{console.error("Cannot connect to the API",err)},"headers": { "accept": "application/json", "Access-Control-Allow-Origin": "*"}})
-				tabledata = ajaxdata
+			// 		Object.keys(gloabldata.commonguilds.guilds[guildid].countingStats).forEach((channel,index)=>{
+			// 			$(`#${guildid}channels`).append(`
+			// 				<div style="outline: #ab274f  solid 2px; margin: 10px; padding: 10px;">
+			// 					<h4>Counting Channel ${index+1}</h4>
+			// 					<p>
+			// 						High Score: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].hs}<br>
+			// 						Current Score: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].last_num}<br>
+			// 						Saves Remining: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].saves}/${gloabldata.commonguilds.guilds[guildid].countingStats[channel].maxSaves}<br>
+			// 						Saves Used: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].savednumbers}
+			// 					</p>
+			// 					<p>
+			// 						Warning Enabled: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].enablewarning}<br>
+			// 						On Public leaderboard: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].hs_enabled}<br>
+			// 						Saves Enabled: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].saves_enabled}<br>
+			// 						Goal: ${(gloabldata.commonguilds.guilds[guildid].countingStats[channel].goal != -1) ? gloabldata.commonguilds.guilds[guildid].countingStats[channel].goal : "Disabled"}<br>
+			// 						Goal Set on: ${new Date(gloabldata.commonguilds.guilds[guildid].countingStats[channel].goal_date).toLocaleString()}<br>
+			// 						High Score achevded on: ${new Date(gloabldata.commonguilds.guilds[guildid].countingStats[channel].hs_date).toLocaleString()}
+			// 					</p>
+			// 				</div>
+			// 			`)
+			// 		})
+			// 	}				
+			// }
+			// "previos_sender": "",
+			// "difficulty": "easy",
+
+			async function getAPIdata(item) {	
+				console.log(item)			
+				var ajaxdata = await fetch(`${gloabldata.APIurl}/get/${item}`)
+					.then(response => {
+						if (response.ok){
+							return response.json()
+						}else{
+							return
+						}
+					})
+					console.log(ajaxdata)
 				return ajaxdata
 			}
-
 			async function sortdata(columnname, tablename){
-				await updatedata(tablename);
-				
-				switch(tablename){
-					case `scores`:
-						var sortdatahtml = "";
-						sortdirection = !sortdirection;
-						switch (columnname) {
-							case "name":
-								tabledata = tabledata.sort((p1, p2) => {
-									return sortdirection ? (p1[columnname] > p2[columnname]) - (p1[columnname] < p2[columnname]) : (p2[columnname] > p1[columnname]) - (p2[columnname] < p1[columnname]);
-								});
-								document.getElementById('Namearrow').classList = sortdirection ? 'fa fa-sort-up' : 'fa fa-sort-down'
-								document.getElementById('last_numarrow').classList = '';
-								document.getElementById('hsarrow').classList = '';
-							break;
-							case "cs":
-							case "hs":
-								tabledata = tabledata.sort((p1, p2) => {
-									return sortdirection ? p1[columnname] - p2[columnname] : p2[columnname] - p1[columnname];
-								});
-								if (columnname == "cs") {
-									document.getElementById('last_numarrow').classList = sortdirection ? 'fa fa-sort-up' : 'fa fa-sort-down'
-									document.getElementById('Namearrow').classList = '';
-									document.getElementById('hsarrow').classList = '';
-								}else {
-									document.getElementById('hsarrow').classList = sortdirection ? 'fa fa-sort-up' : 'fa fa-sort-down'
-									document.getElementById('Namearrow').classList = '';
-									document.getElementById('last_numarrow').classList = '';
-								}
-							break;
+				// flick sort arrow
+				let tablehead = $(`#${tablename} table thead`).children()[1], dataType;
+				Array.from(tablehead.childNodes, async(e,index) => {
+					if (e.innerHTML && e.innerHTML.includes(`<i id=`)){
+						if (e.innerHTML.split(`<i id="`)[1].split(`" class=`)[0] == columnname){
+							dataType = e.getAttribute("dataType")
+							gloabldata[`${tablename}tabledatasortdirection`] = !gloabldata[`${tablename}tabledatasortdirection`];
+							document.getElementById(columnname).classList = gloabldata[`${tablename}tabledatasortdirection`] ? 'fa fa-sort-up' : 'fa fa-sort-down'
+						}else{
+							document.getElementById(e.innerHTML.split(`<i id="`)[1].split(`" class=`)[0]).classList = '';
 						}
-						tabledata.map(data=>{
-							sortdatahtml += `<tr class="tr"><td><img class="guildimg" src="${data.url}"style="border-radius: 50%; width:40px;"></td><td>${data.name}</td><td>${data.cs}</td><td>${data.hs}</td></tr>`;
-						})
-						document.getElementById('tablebody').innerHTML = sortdatahtml;
-					break;
-				}
+					}
+				});
+				// sort data
+				gloabldata[`${tablename}tabledata`] = gloabldata[`${tablename}tabledata`].sort((p1, p2) => {
+					switch (dataType){
+						case `int`:
+							return gloabldata[`${tablename}tabledatasortdirection`] ? p1[columnname] - p2[columnname] : p2[columnname] - p1[columnname];
+						break;
+						case `string`:
+							return gloabldata[`${tablename}tabledatasortdirection`] ? (p1[columnname] > p2[columnname]) - (p1[columnname] < p2[columnname]) : (p2[columnname] > p1[columnname]) - (p2[columnname] < p1[columnname]);
+						break;	
+					}
+				});
+				// update table
+				await $(`#${tablename}TableBody`).empty()
+				gloabldata[`${tablename}tabledata`].map(data=>{
+					let rowdata = (tablename=="scores") ? `<tr class="tr"><td><img class="guildimg" src="${data.url || data.fallback}" onerror="if (this.src != '${data.fallback}') this.src = '${data.fallback}';" style="border-radius: 50%; width:40px;"></td><td>${data.name}</td><td>${data.cs}</td><td>${data.hs}</td></tr>` : `<tr><td>${data.userscoresrank}</td><td>${data.userscoresname}</td><td>${data.userscorestotal}</td></tr>`
+					document.getElementById(`${tablename}TableBody`).innerHTML += rowdata;
+				})
 			}
 		</script>
 	</head>
@@ -150,13 +231,16 @@
 		<div>
 			<!-- Nav -->
 			<nav id="nav">
+				<!-- <div style=" width: 100%; text-align: right;">
+					<a class="button" id="login" href="/get/login">Login</a>
+				</div> -->
 				<a href="#"><img style="max-width:100%;width:100px;" alt="Counting's logo"src="assets/img/counticon.png"></a>
 				<h1 id="title">COUNTING</h1>
 			</nav>
 
 			<!-- Main -->
 			<div id="main" style="height: 100%; width: 100%; margin: 0 auto;" class="home">
-				<!-- Me -->
+				<!-- home -->
 				<article id="home" class="panel intro" style="width: 100%;">
 					<nav align="center" id="nav" style="width: 50%; margin: 0 auto; padding-top: 6%;">
 						<div style="float: left; padding-left: 16%;"><a class="button"href="https://discord.com/oauth2/authorize?client_id=726560538145849374&scope=bot&permissions=3136"rel="nofollow noopener" target="_blank">INVITE</a></div>
@@ -168,10 +252,18 @@
 				<article id="scores" class="panel" style="width: 100%; margin: 0 auto;">
 					<table>
 						<thead>						
-							<tr><th class="sortbutton" colspan="2" onclick="window.location.hash = 'userscores'">User scores</th><th class="sortbutton" colspan="2" onclick="window.location.hash = 'scores'">Channel scores</th></tr>
-							<tr><th class="sortbutton">Icon</th><th onclick="sortdata('name', 'scores')" class="sortbutton">Name <i id="Namearrow" class=""></i></th><th onclick="sortdata('cs', 'scores')" class="sortbutton">Current Score <i id="last_numarrow" class=""></i></th><th onclick="sortdata('hs', 'scores')" class="sortbutton">High Score <i id="hsarrow" class=""></i></th></tr>
+							<tr>
+								<th class="sortbutton" colspan="2" onclick="window.location.hash = 'userscores'">User scores</th>
+								<th class="sortbutton" colspan="2" onclick="window.location.hash = 'scores'">Channel scores</th>
+							</tr>
+							<tr>
+								<th class="sortbutton">Icon</th>
+								<th onclick="sortdata('name', 'scores')" class="sortbutton" dataType="string">Name <i id="name" class=""></i></th>
+								<th onclick="sortdata('cs', 'scores')" class="sortbutton" dataType="int">Current Score <i id="cs" class=""></i></th>
+								<th onclick="sortdata('hs', 'scores')" class="sortbutton" dataType="int">High Score <i id="hs" class=""></i></th>
+							</tr>
 						</thead>
-						<tbody id='tablebody'>
+						<tbody id='scoresTableBody'>
 						</tbody>
 					</table>
 				</article>
@@ -179,24 +271,59 @@
 				<article id="userscores" class="panel" style="width: 100%; margin: 0 auto;">
 					<table>
 						<thead>
-							<tr><th class="sortbutton" colspan="2" onclick="window.location.hash = 'userscores'">User scores</th><th class="sortbutton" colspan="2" onclick="window.location.hash = 'scores'">Channel scores</th></tr>
 							<tr>
-								<th class="sortbutton">Rank</th>
-								<th class="sortbutton">Username <i id="Namearrow" class=""></i></th>
-								<th class="sortbutton">Correct <i id="last_numarrow" class=""></i></th>
-								<th class="sortbutton">Total <i id="hsarrow" class=""></i></th>
+								<th class="sortbutton" colspan="2" onclick="window.location.hash = 'userscores'">User scores</th>
+								<th class="sortbutton" colspan="2" onclick="window.location.hash = 'scores'">Channel scores</th>
+							</tr>
+							<tr>
+								<th class="sortbutton" onclick="sortdata('userscoresrank', 'userscores')" dataType="int">Rank <i id="userscoresrank" class=""></i></th>
+								<th class="sortbutton" onclick="sortdata('userscoresname', 'userscores')" dataType="string">Username <i id="userscoresname" class=""></i></th>
+								<th class="sortbutton" onclick="sortdata('userscorestotal', 'userscores')" dataType="int">Total <i id="userscorestotal" class=""></i></th>
 							</tr>
 						</thead>
-						<tbody id='userScoresTableBody'>
+						<tbody id='userscoresTableBody'>
 						</tbody>
 					</table>
+				</article>
+				<!-- user -->
+				<!-- <article id="user" class="panel" style="width: 100%; margin: 0 auto; text-align: center;">
+					<div style="display: grid; grid-template-areas: 'header header header' 'menu right right'; padding: 10px;">
+						<div id="userID"></div>
+						<div id="guildList" style="margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center;">
+							<div style="width: 100%; text-align: left;">
+								<h2 style="padding-left: 34%;">Your Servers</h2>
+							</div>
+						</div>
+					</div>
+					<div id="guilds" style="margin: 0 auto; width: 100%; float: canter; text-align: center;"></div>
+				</article> -->
+				<!-- privacy -->
+				<article id="privacy" class="panel" style="width: 100%; margin: 0 auto;">
+					<h4>Stored Data</h4>
+					<p>
+						The bot will store information automatically when being invited to a new Discord Server. This information can include:<br>
+						◉ The servers id<br>
+						◉ The bot's default prefix<br>
+					</p>
+					<h4>Updating Data</h4>
+					<p>
+						The stored data may be updated when using commands, voting on bot listing stites, or by becoming pateron. Updating data will require the action of a user. We may store any sort of Snowflake IDs provided by Discord and user input associated with our bot's features in order to provide features may provide. We will not knowingly store sensitive data, identifying data, unnecessary data, or data which is not used in our bot's features. By interacting with our bot, you authorize us to store said data.
+					</p>
+					<h4>Removal of Data</h4>
+					<p>
+						Users may manually request this data to be deleted. Additionally, users who own or maintain said server can delete data using the associated command, or by making a request in a support server we have and proving that they own or maintain the guild in question. Guild-specific data is stored with a reference to the guild, and will be deleted with guild data. Only the server owner may ask for the removal of data from their server through the bot's support server. We may ask for verification of ownership of the Server.
+					</p> 
 				</article>
 			</div>
 
 			<!-- Footer -->
-			<div id="footer">
+			<div id="footer" style="text-align: center; padding: 2em 0 0 0; font-size: 0.75em;">
 				<div align="center"style="position:relative; bottom:0; width:100%; text-align:center; flex-shrink: 0;">
-					<div style="padding-bottom: 0.5%;"><a href="https://discord.gg/cz5ECsdPBT" rel="nofollow noopener" title="Join the discord." target="_blank"class="joindiscordserver"><i class="fab fa-discord fa-lg"></i></a></div>
+					<div style="padding-bottom: 0.5%;">
+						<!-- <a href="https://top.gg/bot/726560538145849374" rel="nofollow noopener" title="Top.gg" target="_blank" style="padding-right: 0.5%;"><img style="width: 1.3%;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzNyIgdmlld0JveD0iMCAwIDMwIDM3Ij4KICAgIDxnIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTIyLjAxIDcuODg2VjUuNDUyYy45Ny0uNTExIDEuNDc4LTEuNDYgMS40NzgtMi41MzFDMjMuNDg4IDEuMzE0IDIyLjE4IDAgMjAuNTgxIDBjLTEuNTk4IDAtMi45MDYgMS4zMTQtMi45MDYgMi45MiAwIDEuMDcxLjQ2IDEuOTk2IDEuNDI5IDIuNTA3djIuNDU5aC04LjcyVjUuNDI3YTIuOTI3IDIuOTI3IDAgMCAwIDEuNDMtMi41MDZDMTEuODEzIDEuMzE0IDEwLjUwNCAwIDguOTA2IDAgNy4zMDggMCA2IDEuMzE0IDYgMi45MmEyLjkgMi45IDAgMCAwIDEuNDc4IDIuNTMydjIuNDM0SDIyLjAxeiIvPgogICAgICAgIDxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTI2LjM4OSAxMGMxLjk0NCAwIDMuNTE4IDEuNTYzIDMuNjExIDMuNDAxVjM3bC0zLjYxMS0zLjg2SDMuNTE5QzEuNTc0IDMzLjE0IDAgMzEuNjY4IDAgMjkuNzM3VjEzLjQwMUMwIDExLjU2MyAxLjU3NCAxMCAzLjUxOSAxMGgyMi44N3pNMTEuNSAxOGgtM2MtLjgyNSAwLTEuNS42NzUtMS41IDEuNXYzYzAgLjgyNS42NzUgMS41IDEuNSAxLjVoM2MuODI1IDAgMS41LS42NzUgMS41LTEuNXYtM2MwLS44MjUtLjY3NS0xLjUtMS41LTEuNXptMTAgMGgtM2MtLjgyNSAwLTEuNS42NzUtMS41IDEuNXYzYzAgLjgyNS42NzUgMS41IDEuNSAxLjVoM2MuODI1IDAgMS41LS42NzUgMS41LTEuNXYtM2MwLS44MjUtLjY3NS0xLjUtMS41LTEuNXoiLz4KICAgIDwvZz4KPC9zdmc+Cg=="></a> -->
+						<a href="https://discord.gg/cz5ECsdPBT" rel="nofollow noopener" title="Join the discord." target="_blank" style="padding-right: 0.5%;"><i class="fab fa-discord fa-lg"></i></a>
+						<a href="https://www.patreon.com/numselli" rel="nofollow noopener" title="Become a Patreon" target="_blank"><i class="fab fa-patreon fa-lg"></i></a>
+					</div>
 					<div style="padding-top: 0.5%;"><a href="https://numselli.github.io" rel="nofollow noopener" title="My site." target="_blank"><span align="center">Made by numselli#6964</span></a></div>
 				</div>
 			</div>
@@ -228,8 +355,7 @@
 					if (window.location.hash) {
 						$panel = $panels.filter(window.location.hash);
 						$link = $nav_links.filter(`[href="${window.location.hash}"]`);
-						if ($panel.length == 0)
-							return;
+						if ($panel.length == 0) return;
 					}else {
 						$panel = $panels.first();
 						$link = $nav_links.first();

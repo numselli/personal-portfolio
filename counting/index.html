@@ -45,7 +45,7 @@
 
 			// set golabl vars
 			var gloabldata = {
-				"APIurl":`https://bd9d7cd31525.ngrok.io`,
+				"APIurl":'https://22893af28de2.ngrok.io',
 				"scorestabledata":[],
 				"scorestabledatasortdirection": false,
 				"userscorestabledata":[],
@@ -55,16 +55,6 @@
 
 			// headder, title adujust
 			async function pageLoad(){
-				// if (($("#login")[0].innerHTML=="Login")){
-				// 	document.getElementById("login").href=`${gloabldata.APIurl}/get/login`;
-
-				// 	const userdatajson = await getAPIdata("user")
-				// 	if (userdatajson){
-				// 		$("#login").removeClass("button").attr("href", "#user").html(`<img src="https://cdn.discordapp.com/avatars/${userdatajson.id}/${userdatajson.avatarHash}" alt="${userdatajson.tag}'s profile picture" style="border-radius: 50%; width:40px;">`)
-				// 		$('#userID').append(`<img src="https://cdn.discordapp.com/avatars/${userdatajson.id}/${userdatajson.avatarHash}" alt="${userdatajson.tag}'s profile picture" style="border-radius: 50%; width:100px;"><h3>${userdatajson.tag}</h3>`)
-				// 	}
-				// }
-			
 				switch((window.location.hash).replace("#","")){
 					case `scores`:
 						$("#title").text("SCORES")
@@ -90,34 +80,11 @@
 							})
 						}
 					break;
-					// case `user`:
-					// 	$("#title").text("USER")
-					// 	document.title = "User"
-					// 	await $("#main").removeClass("home");
-					// 	if ($("#guildList").children().length==1){
-					// 		gloabldata.commonguilds = await getAPIdata("userguilds")
-					// 		for (const commonGuild in gloabldata.commonguilds.guilds) {
-					// 			$("#guildList").append(`<div style="flex: 0 0 calc(16.66% - 40px); text-align: center; margin: 10px;"><a onclick="showguild('${gloabldata.commonguilds.guilds[commonGuild].guildINFO.id}')" style="cursor: pointer;"><img src="${gloabldata.commonguilds.guilds[commonGuild].guildINFO.iconhash ? `https://cdn.discordapp.com/icons/${gloabldata.commonguilds.guilds[commonGuild].guildINFO.id}/${gloabldata.commonguilds.guilds[commonGuild].guildINFO.iconhash}`: gloabldata.commonguilds.guilds[commonGuild].guildINFO.fallbackicon}" alt="${gloabldata.commonguilds.guilds[commonGuild].guildINFO.name}'s icon" style="border-radius: 50%; width:95px;"></a><figcaption>${gloabldata.commonguilds.guilds[commonGuild].guildINFO.name}</figcaption></div>`)
-					// 		}
-					// 		$(`#userID`).append(`
-					// 			<p>
-					// 				Correct Numbers: ${gloabldata.commonguilds.userscores.correctnumbers}<br>
-					// 				Wrong Numbers: ${gloabldata.commonguilds.userscores.wrongnumbers}<br>
-					// 				Total Numbers: ${gloabldata.commonguilds.userscores.correctnumbers+gloabldata.commonguilds.userscores.wrongnumbers}<br>
-					// 				Saves: ${gloabldata.commonguilds.userscores.saves}/${gloabldata.commonguilds.userscores.maxSaves}<br>
-					// 				Saves Uses: ${gloabldata.commonguilds.userscores.savednumbers}<br>
-					// 				Premium level: ${gloabldata.commonguilds.userscores.premiumlevel}<br>
-					// 				Banned: ${gloabldata.commonguilds.userscores.isbanned}
-					// 			</p>
-					// 		`)
-					// 	}
-					// break;
 					case `privacy`:
 						$("#title").text("PRIVACY")
 						document.title = "PRIVACY"
 						$("#main").removeClass("home");
 					break;
-					case `countingCheates`:
 					case `countingCheats`:
 						let randomVideos = [
 							"https://www.youtube.com/watch?v=jeg_TJvkSjg",
@@ -133,52 +100,6 @@
 					break;
 				}
 			}
-
-			// async function showguild(guildid){
-			// 	$('#guildList').hide()
-			// 	$(`#${guildid}`).show()
-			// 	$('#userID').hide() 
-			// 	if($(`#${guildid}`).length == 0){
-			// 		$('#guilds').append(`
-			// 			<div id="${guildid}">
-			// 				<div style="with:100%; vertical-align: top;">
-			// 					<a class="button" onclick="$('#${guildid}').hide(); $('#userID').show(); $('#guildList').show()" style="float: right;">back</a>
-			// 					<div style="text-align:center; float:left;">
-			// 						<img src="${gloabldata.commonguilds.guilds[guildid].guildINFO.iconhash ? `https://cdn.discordapp.com/icons/${gloabldata.commonguilds.guilds[guildid].guildINFO.id}/${gloabldata.commonguilds.guilds[guildid].guildINFO.iconhash}`: gloabldata.commonguilds.guilds[guildid].guildINFO.fallbackicon}" alt="${gloabldata.commonguilds.guilds[guildid].guildINFO.name}'s icon" style="border-radius: 50%; width:95px;">
-			// 						<figcaption>${gloabldata.commonguilds.guilds[guildid].guildINFO.name}</figcaption>
-			// 					</div>
-			// 				<div>
-			// 				<div id="${guildid}channels" style="with:50%; display: grid;  grid-template-columns: repeat(auto-fill, minmax(10em, 10em)); grid-column-gap: 10px; justify-content: center; display: flex; flex-wrap: wrap; ">
-			// 				</div>
-			// 			</div>
-			// 		`)
-
-			// 		Object.keys(gloabldata.commonguilds.guilds[guildid].countingStats).forEach((channel,index)=>{
-			// 			$(`#${guildid}channels`).append(`
-			// 				<div style="outline: #ab274f  solid 2px; margin: 10px; padding: 10px;">
-			// 					<h4>Counting Channel ${index+1}</h4>
-			// 					<p>
-			// 						High Score: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].hs}<br>
-			// 						Current Score: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].last_num}<br>
-			// 						Saves Remining: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].saves}/${gloabldata.commonguilds.guilds[guildid].countingStats[channel].maxSaves}<br>
-			// 						Saves Used: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].savednumbers}
-			// 					</p>
-			// 					<p>
-			// 						Warning Enabled: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].enablewarning}<br>
-			// 						On Public leaderboard: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].hs_enabled}<br>
-			// 						Saves Enabled: ${gloabldata.commonguilds.guilds[guildid].countingStats[channel].saves_enabled}<br>
-			// 						Goal: ${(gloabldata.commonguilds.guilds[guildid].countingStats[channel].goal != -1) ? gloabldata.commonguilds.guilds[guildid].countingStats[channel].goal : "Disabled"}<br>
-			// 						Goal Set on: ${new Date(gloabldata.commonguilds.guilds[guildid].countingStats[channel].goal_date).toLocaleString()}<br>
-			// 						High Score achevded on: ${new Date(gloabldata.commonguilds.guilds[guildid].countingStats[channel].hs_date).toLocaleString()}
-			// 					</p>
-			// 				</div>
-			// 			`)
-			// 		})
-			// 	}				
-			// }
-			// "previos_sender": "",
-			// "difficulty": "easy",
-
 			async function getAPIdata(item) {	
 				console.log(item)			
 				var ajaxdata = await fetch(`${gloabldata.APIurl}/get/${item}`)
@@ -232,9 +153,6 @@
 		<div>
 			<!-- Nav -->
 			<nav id="nav">
-				<!-- <div style=" width: 100%; text-align: right;">
-					<a class="button" id="login" href="/get/login">Login</a>
-				</div> -->
 				<a href="#"><img style="max-width:100%;width:100px;" alt="Counting's logo"src="assets/img/counticon.png"></a>
 				<h1 id="title">COUNTING</h1>
 			</nav>
@@ -286,18 +204,6 @@
 						</tbody>
 					</table>
 				</article>
-				<!-- user -->
-				<!-- <article id="user" class="panel" style="width: 100%; margin: 0 auto; text-align: center;">
-					<div style="display: grid; grid-template-areas: 'header header header' 'menu right right'; padding: 10px;">
-						<div id="userID"></div>
-						<div id="guildList" style="margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center;">
-							<div style="width: 100%; text-align: left;">
-								<h2 style="padding-left: 34%;">Your Servers</h2>
-							</div>
-						</div>
-					</div>
-					<div id="guilds" style="margin: 0 auto; width: 100%; float: canter; text-align: center;"></div>
-				</article> -->
 				<!-- privacy -->
 				<article id="privacy" class="panel" style="width: 100%; margin: 0 auto;">
 					<h4>Stored Data</h4>
@@ -321,7 +227,6 @@
 			<div id="footer" style="text-align: center; padding: 2em 0 0 0; font-size: 0.75em;">
 				<div align="center"style="position:relative; bottom:0; width:100%; text-align:center; flex-shrink: 0;">
 					<div style="padding-bottom: 0.5%;">
-						<!-- <a href="https://top.gg/bot/726560538145849374" rel="nofollow noopener" title="Top.gg" target="_blank" style="padding-right: 0.5%;"><img style="width: 1.3%;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzNyIgdmlld0JveD0iMCAwIDMwIDM3Ij4KICAgIDxnIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTIyLjAxIDcuODg2VjUuNDUyYy45Ny0uNTExIDEuNDc4LTEuNDYgMS40NzgtMi41MzFDMjMuNDg4IDEuMzE0IDIyLjE4IDAgMjAuNTgxIDBjLTEuNTk4IDAtMi45MDYgMS4zMTQtMi45MDYgMi45MiAwIDEuMDcxLjQ2IDEuOTk2IDEuNDI5IDIuNTA3djIuNDU5aC04LjcyVjUuNDI3YTIuOTI3IDIuOTI3IDAgMCAwIDEuNDMtMi41MDZDMTEuODEzIDEuMzE0IDEwLjUwNCAwIDguOTA2IDAgNy4zMDggMCA2IDEuMzE0IDYgMi45MmEyLjkgMi45IDAgMCAwIDEuNDc4IDIuNTMydjIuNDM0SDIyLjAxeiIvPgogICAgICAgIDxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTI2LjM4OSAxMGMxLjk0NCAwIDMuNTE4IDEuNTYzIDMuNjExIDMuNDAxVjM3bC0zLjYxMS0zLjg2SDMuNTE5QzEuNTc0IDMzLjE0IDAgMzEuNjY4IDAgMjkuNzM3VjEzLjQwMUMwIDExLjU2MyAxLjU3NCAxMCAzLjUxOSAxMGgyMi44N3pNMTEuNSAxOGgtM2MtLjgyNSAwLTEuNS42NzUtMS41IDEuNXYzYzAgLjgyNS42NzUgMS41IDEuNSAxLjVoM2MuODI1IDAgMS41LS42NzUgMS41LTEuNXYtM2MwLS44MjUtLjY3NS0xLjUtMS41LTEuNXptMTAgMGgtM2MtLjgyNSAwLTEuNS42NzUtMS41IDEuNXYzYzAgLjgyNS42NzUgMS41IDEuNSAxLjVoM2MuODI1IDAgMS41LS42NzUgMS41LTEuNXYtM2MwLS44MjUtLjY3NS0xLjUtMS41LTEuNXoiLz4KICAgIDwvZz4KPC9zdmc+Cg=="></a> -->
 						<a href="https://discord.gg/cz5ECsdPBT" rel="nofollow noopener" title="Join the discord." target="_blank" style="padding-right: 0.5%;"><i class="fab fa-discord fa-lg"></i></a>
 						<a href="https://www.patreon.com/numselli" rel="nofollow noopener" title="Become a Patreon" target="_blank"><i class="fab fa-patreon fa-lg"></i></a>
 					</div>

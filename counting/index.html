@@ -4,86 +4,152 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="Compete with other Discord servers to get the highest count.">
+		<meta name="theme-color" content="#e00051">
+
 		<title>Counting</title>
-		<link rel="icon" href="assets/img/counticon.png" type="image/x-icon"/>
+		<link rel="icon" href="https://cdn.discordapp.com/avatars/726560538145849374/4dd18fba5c5e4be750f02aef9771dce4.png" type="image/x-icon"/>
+
 		<script src="assets/js/jquery.min.js"></script>
 		<script async src="https://arc.io/widget.min.js#vjBL7bu4"></script>
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<meta name="theme-color" content="#e00051">
-		<script src="https://getinsights.io/js/insights.js"></script>
-		<script>
-			insights.init("myD4woT_qCdSytjV")
-			insights.trackPages()
-		</script>
+
+		<link href="assets/css/fontawesome-all.min.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 
 		<!-- custom css and js -->
 		<style>
-			html,body{background-color: #001040; overflow-x: hidden; width: 100%;height: 100%; margin:0;}
-			html::-webkit-scrollbar {display: none;}
-			html{-ms-overflow-style: none;scrollbar-width: none;}
+			/* documnt */
+			*{
+				font-family: 'Raleway';
+			}
+			html, body{
+				background-color: #001040; 
+				overflow-x: hidden; 
+				width: 100%;
+				height: 100%;
+				margin:0;
+			}
+			html::-webkit-scrollbar {
+				display: none;
+			}
+			html{
+				-ms-overflow-style: none;
+				scrollbar-width: none;
+			}
+			a:link, a:visited, a:hover {
+				color:white;
+				background-color: transparent;
+				text-decoration: none;
+			}
 
-			a:link,a:visited,a:hover {color:white;background-color: transparent;text-decoration: none;}
-			.button {color: #ffffff !important;text-transform: uppercase;background: #6c6c6c58;padding: 20px;border: 4px solid #ff0066 !important;border-radius: 6px;display: inline-block;transition: all 0.3s ease 0s;}
-			.button:hover {color: #ffffff !important;border-radius: 50px;border-color: #ff0066 !important;transition: all 0.3s ease 0s;}
-			.button:link,.button:visited {text-decoration: none;}
+			/* nav */
+			ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+				background-color: #333;
+			}
+			li {
+				float: left;
+			}
+			li a {
+				display: block;
+				color: white;
+				text-align: center;
+				padding: 14px 16px;
+				text-decoration: none;
+			}
+			li a:hover {
+				background-color: #111;
+			}
+
+			/* footer */
+			#footer {
+				position: fixed;
+				left: 0;
+				bottom: 0;
+				width: 100%;
+				color: white;
+				text-align: center;
+			}
+
+			/* Section/Article */
+			section, article, section > :last-child, section:last-child, article > :last-child, article:last-child {
+				margin-bottom: 3em;
+			}
 				
 			table{width: 50%;height: 95%; background-color:#aaaaaa; margin: 0 auto;}
-			.sortbutton {justify-content: center;background: #102E3B;color: #f9f9f8;}
-			.sortbutton:hover, .sortbutton a:hover {background: #4d4e4f;color: #f9f9f8;border: #4d4e4f;}
-			.sortbutton a {background: #102E3B;padding: 7px 35px;font-size: 16px;color: #f9f9f8;border: #102E3B;}
+			th {justify-content: center;background: #102E3B;color: #f9f9f8;}
+			th:hover, th a:hover {background: #4d4e4f;color: #f9f9f8;border: #4d4e4f;}
+			th a {background: #102E3B;padding: 7px 35px;font-size: 16px;color: #f9f9f8;border: #102E3B;}
 			.tr{background-color:#d2d2d2;outline: 0.5px solid #000000;}
 			td{text-align: center; color: #000000;}
 			.tr:nth-child(odd){background-color:#aaaaaa;outline: 0.5px solid #000000;}
 
-			.guildimg{vertical-align: middle;max-height: 100px;max-width: 100px;}
 
-			.home{padding-bottom: 15%;}
+			.heading {
+				padding: 20px 50px !important;
+				color: #fff !important;
+				text-align: center;
+			}
+
+			.title {
+				line-height: 50px !important;
+				margin-bottom: 8px !important;
+				font-size: 36px !important;
+			}
+
+			.row {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+			}
+
+			.column {
+				flex-basis: 100%;
+			}
+
+			@media screen and (min-width: 800px) {
+				.column {
+					flex: 1;
+				}
+			}
 		</style>
 		<script>
-			$(document).ready(pageLoad);
-			$(window).bind('hashchange', pageLoad);
+			document.addEventListener("DOMContentLoaded", pageLoad)
+			window.addEventListener("hashchange", pageLoad, false);
 
 			// set golabl vars
 			var gloabldata = {
-				"APIurl":'https://d525bebe867a.ngrok.io',
+				"APIurl":`https://807d49f357e7.ngrok.io/counting`,
 				"scorestabledata":[],
-				"scorestabledatasortdirection": false,
-				"userscorestabledata":[],
-				"usertabledatasortdirection": false,
-				"commonguilds":{}
+				"scoresDataSortDirection": false,
+				"userscorestabledata": [],
+				"stats":{}
+
 			}
 
 			// headder, title adujust
 			async function pageLoad(){
-				switch((window.location.hash).replace("#","")){
+				const title = window.location.hash.replace("#","");
+				document.title = title == "" ? "Counting" : title;
+
+				switch(title){
 					case `scores`:
-						$("#title").text("SCORES")
-						document.title = "Scores"
-						$("#main").removeClass("home");
-						if ($("#scoresTableBody").find("tr").length<=0){
-							gloabldata.scorestabledata = await getAPIdata("scores")
-							if (gloabldata.scorestabledata){
-								gloabldata.scorestabledata.map(({url,name,cs,hs})=>{
-									$('#scoresTableBody').append(`<tr class="tr"><td><img class="guildimg" src="${url}" alt="${name}'s guild icon" style="border-radius: 50%; width:40px;" loading="lazy" onError="this.onerror=null;this.src='assets/img/error.png';"></td><td>${name}</td><td>${cs}</td><td>${hs}</td></tr>`);
-								})
-							}
-						}
+						if (!$("#scoresTableBody").find("tr").length<=0) return
+
+						gloabldata.scorestabledata = await getAPIdata("scores");
+						gloabldata.scorestabledata.map(({name, url, hs, last_num})=>{
+							$('#scoresTableBody').append(`<tr class="tr"><td><img class="guildimg" src="${url}" alt="${name}'s guild icon" style="border-radius: 50%; width:40px;" loading="lazy" onError="this.onerror=null;this.src='assets/img/error.png';"></td><td>${name}</td><td>${last_num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td><td>${hs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td></tr>`);
+						})
 					break;
 					case `userscores`:
-						$("#title").text("USER SCORES")
-						document.title = "User scores"
-						$("#main").removeClass("home");
-						if ($("#userscoresTableBody").find("tr").length<=0){
-							gloabldata.userscorestabledata = (await getAPIdata("userscores")).slice(0, 50)
-							gloabldata.userscorestabledata.forEach(async({userscoresrank, userscoresname, userscorestotal}) => {
-								$('#userscoresTableBody').append(`<tr><td>${userscoresrank}</td><td>${userscoresname}</td><td>${userscorestotal}</td></tr>`);
-							})
-						}
-					break;
-					case `privacy`:
-						$("#title").text("PRIVACY")
-						document.title = "PRIVACY"
-						$("#main").removeClass("home");
+						if (!$("#userscoresTableBody").find("tr").length<=0) return
+
+						gloabldata.userscorestabledata = (await getAPIdata("userscores")).slice(0, 60);
+						gloabldata.userscorestabledata.forEach(async({correctnumbers, username, wrongnumbers}, index) => {
+							$('#userscoresTableBody').append(`<tr><td>${index+1}</td><td>${username}</td><td>${(correctnumbers+wrongnumbers).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td></tr>`);
+						})
 					break;
 					case `countingCheats`:
 						let randomVideos = [
@@ -92,58 +158,101 @@
 						]
 						window.location.replace(randomVideos[Math.floor(Math.random() * randomVideos.length)]);
 					break;
-					
-					default:
-						$("#main").addClass("home");
-						$("#title").text("COUNTING")
-						document.title = "Counting"
+
+					case "":
+						if ( $("#introStats").children().length > 0) return
+						gloabldata.stats = await getAPIdata("stats")
+						$('#introStats').prepend(`<div class="column">
+						<p style="font-size: 50px !important;line-height: 15px !important;letter-spacing: -0.06em !important;font-weight: bold !important;">${(gloabldata.stats.numbers.correct+gloabldata.stats.numbers.wrong).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+						<p style="font-weight: bold !important;font-size: 20px !important;">Numbers counted</p>
+						</div>`);
+
+						$('#introStats').prepend(`<div class="column">
+							<p style="font-size: 50px !important;line-height: 15px !important;letter-spacing: -0.06em !important;font-weight: bold !important;">${gloabldata.stats.dbUsers.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+							<p style="font-weight: bold !important;font-size: 20px !important;">Users</p>
+							</div>`);
+
+						$('#introStats').prepend(`<div class="column">
+							<p style="font-size: 50px !important;line-height: 15px !important;letter-spacing: -0.06em !important;font-weight: bold !important;">${gloabldata.stats.guilds.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+							<p style="font-weight: bold !important;font-size: 20px !important;">Servers</p>
+							</div>`);
+						
 					break;
 				}
 			}
+
 			async function getAPIdata(item) {	
-				console.log(item)			
-				var ajaxdata = await fetch(`${gloabldata.APIurl}/get/${item}`)
-					.then(response => {
-						if (response.ok){
-							return response.json()
-						}else{
-							return
-						}
-					})
-					console.log(ajaxdata)
-				return ajaxdata
+				var ajaxdata = await fetch(`${gloabldata.APIurl}/${item}`)
+				return await ajaxdata.json()
 			}
-			async function sortdata(columnname, tablename){
+
+			async function sortdata(column){
+				const dataType = column.getAttribute("dataType")
+				const name = column.getAttribute("name")
+
 				// flick sort arrow
-				let tablehead = $(`#${tablename} table thead`).children()[1], dataType;
-				Array.from(tablehead.childNodes, async(e,index) => {
-					if (e.innerHTML && e.innerHTML.includes(`<i id=`)){
-						if (e.innerHTML.split(`<i id="`)[1].split(`" class=`)[0] == columnname){
-							dataType = e.getAttribute("dataType")
-							gloabldata[`${tablename}tabledatasortdirection`] = !gloabldata[`${tablename}tabledatasortdirection`];
-							document.getElementById(columnname).classList = gloabldata[`${tablename}tabledatasortdirection`] ? 'fa fa-sort-up' : 'fa fa-sort-down'
-						}else{
-							document.getElementById(e.innerHTML.split(`<i id="`)[1].split(`" class=`)[0]).classList = '';
-						}
+				const sortButtons = document.getElementsByClassName("sortbutton");
+				for (const sortButton of sortButtons) {
+					if (sortButton.childNodes[1]){
+						if (sortButton.childNodes[1].id == name){
+							gloabldata.scoresDataSortDirection = !gloabldata.scoresDataSortDirection;
+							document.getElementById(name).classList = gloabldata.scoresDataSortDirection ? 'fa fa-sort-up' : 'fa fa-sort-down'
+						}else sortButton.childNodes[1].classList="";
 					}
-				});
+				}
+
 				// sort data
-				gloabldata[`${tablename}tabledata`] = gloabldata[`${tablename}tabledata`].sort((p1, p2) => {
-					switch (dataType){
-						case `int`:
-							return gloabldata[`${tablename}tabledatasortdirection`] ? p1[columnname] - p2[columnname] : p2[columnname] - p1[columnname];
-						break;
-						case `string`:
-							return gloabldata[`${tablename}tabledatasortdirection`] ? (p1[columnname] > p2[columnname]) - (p1[columnname] < p2[columnname]) : (p2[columnname] > p1[columnname]) - (p2[columnname] < p1[columnname]);
-						break;	
-					}
+				gloabldata[`scorestabledata`] = gloabldata[`scorestabledata`].sort((p1, p2) => {
+					return {
+						"int": gloabldata.scoresDataSortDirection ? p1[name] - p2[name] : p2[name] - p1[name],
+						"string": gloabldata.scoresDataSortDirection ? (p1[name] > p2[name]) - (p1[name] < p2[name]) : (p2[name] > p1[name]) - (p2[name] < p1[name])
+					}[dataType]
 				});
-				// update table
-				await $(`#${tablename}TableBody`).empty()
-				gloabldata[`${tablename}tabledata`].map(data=>{
-					let rowdata = (tablename=="scores") ? `<tr class="tr"><td><img class="guildimg" src="${data.url || data.fallback}" onerror="if (this.src != '${data.fallback}') this.src = '${data.fallback}';" style="border-radius: 50%; width:40px;"></td><td>${data.name}</td><td>${data.cs}</td><td>${data.hs}</td></tr>` : `<tr><td>${data.userscoresrank}</td><td>${data.userscoresname}</td><td>${data.userscorestotal}</td></tr>`
-					document.getElementById(`${tablename}TableBody`).innerHTML += rowdata;
+
+				// // update table
+				let new_tbody = document.createElement('tbody');
+				new_tbody.id = "scoresTableBody"
+				gloabldata[`scorestabledata`].map(data=>{
+					
+					let row = document.createElement("tr")
+					row.className ="tr"
+					
+					let imageNode = document.createElement("td")
+					let image = document.createElement('img')
+					image.src  = data.url || data.fallback
+					image.className = 'guildimg'
+					image.setAttribute("onerror",  "if (this.src != 'assets/img/error.png') this.src = 'assets/img/error.png';")
+					image.style='border-radius: 50%; width:40px;'
+					imageNode.appendChild(image)
+					row.appendChild(imageNode);
+
+					let nameNode = document.createElement("td")
+					const nameText = document.createTextNode(data.name);
+					nameNode.appendChild(nameText);
+					row.appendChild(nameNode);
+
+					let currentScoreNode = document.createElement("td")
+					const currentScoreText = document.createTextNode(data.last_num);
+					currentScoreNode.appendChild(currentScoreText);
+					row.appendChild(currentScoreNode);
+
+					let highScoreNode = document.createElement("td")
+					const highcoreText = document.createTextNode(data.hs);
+					highScoreNode.appendChild(highcoreText);
+					row.appendChild(highScoreNode);
+
+					new_tbody.appendChild(row);
 				})
+				let old_tbody = document.getElementById("scoresTableBody")
+				old_tbody.parentNode.replaceChild(new_tbody, old_tbody);
+			}
+
+			function getCookie(cname) {
+				let ca = decodeURIComponent(document.cookie).split('; '), json = {};
+				for (var i = 0; i < ca.length; i++) {
+					json[ca[i].split("=")[0]]=ca[i].split("=")[1]
+				}
+				return json[cname];
 			}
 		</script>
 	</head>
@@ -152,58 +261,60 @@
 		<!-- Wrapper-->
 		<div>
 			<!-- Nav -->
-			<nav id="nav">
-				<a href="#"><img style="max-width:100%;width:100px;" alt="Counting's logo"src="assets/img/counticon.png"></a>
-				<h1 id="title">COUNTING</h1>
-			</nav>
+			<ul>
+				<li><a href="#"><img style="max-width: 1.3; width: 1.3em;" alt="Counting's logo"src="https://cdn.discordapp.com/avatars/726560538145849374/4dd18fba5c5e4be750f02aef9771dce4.png"></a></li>
+				<li><a href="https://discord.com/oauth2/authorize?client_id=726560538145849374&scope=bot&permissions=3136" rel="nofollow noopener" target="_blank">Invite</a></li>
+				<li><a href="#scores">Scores</a></li>
+				<li><a href="#userscores">User Scores</a></li>
+				<li><a href="#privacy">Privacy</a></li>
+			</ul>
 
 			<!-- Main -->
-			<div id="main" style="height: 100%; width: 100%; margin: 0 auto;" class="home">
+			<div id="main" style="height: 100%; width: 100%; margin: 0 auto;">
 				<!-- home -->
-				<article id="home" class="panel intro" style="width: 100%;">
-					<nav align="center" id="nav" style="width: 50%; margin: 0 auto; padding-top: 6%;">
-						<div style="float: left; padding-left: 16%;"><a class="button"href="https://discord.com/oauth2/authorize?client_id=726560538145849374&scope=bot&permissions=3136"rel="nofollow noopener" target="_blank">INVITE</a></div>
-						<div style="float: right; padding-right: 16%;"><a class="button" href="#scores">SCORES</a></div>
-					<nav>
+				<article id="home" class="panel intro" style="width: 100%; height: 100%;text-align: center;">
+					<div class="row" id="introStats" style="padding-bottom: 3em;">
+					</div>
+			
+					<div class="row">
+						<div class="column heading">
+							<p style="font-size: 35px !important;line-height: 15px !important;letter-spacing: -0.06em !important;font-weight: bold !important;">About Counting</p>
+							<p style="font-weight: bold !important;font-size: 20px !important;">Compete with other Discord servers to get the highest count.</p>
+						</div>
+					</div>
 				</article>
 
 				<!-- guild socres -->
 				<article id="scores" class="panel" style="width: 100%; margin: 0 auto;">
 					<table>
-						<thead>						
-							<tr>
-								<th class="sortbutton" colspan="2" onclick="window.location.hash = 'userscores'">User scores</th>
-								<th class="sortbutton" colspan="2" onclick="window.location.hash = 'scores'">Channel scores</th>
-							</tr>
+						<thead>
 							<tr>
 								<th class="sortbutton">Icon</th>
-								<th onclick="sortdata('name', 'scores')" class="sortbutton" dataType="string">Name <i id="name" class=""></i></th>
-								<th onclick="sortdata('cs', 'scores')" class="sortbutton" dataType="int">Current Score <i id="cs" class=""></i></th>
-								<th onclick="sortdata('hs', 'scores')" class="sortbutton" dataType="int">High Score <i id="hs" class=""></i></th>
+								<th onclick="sortdata(this)" class="sortbutton" dataType="string" name="name">Name <i id="name" class=""></i></th>
+								<th onclick="sortdata(this)" class="sortbutton" dataType="int" name="cs">Current Score <i id="cs" class=""></i></th>
+								<th onclick="sortdata(this)" class="sortbutton" dataType="int" name ="hs">High Score <i id="hs" class=""></i></th>
 							</tr>
 						</thead>
 						<tbody id='scoresTableBody'>
 						</tbody>
 					</table>
 				</article>
+
 				<!-- user scores -->
 				<article id="userscores" class="panel" style="width: 100%; margin: 0 auto;">
 					<table>
 						<thead>
 							<tr>
-								<th class="sortbutton" colspan="2" onclick="window.location.hash = 'userscores'">User scores</th>
-								<th class="sortbutton" colspan="2" onclick="window.location.hash = 'scores'">Channel scores</th>
-							</tr>
-							<tr>
-								<th class="sortbutton" onclick="sortdata('userscoresrank', 'userscores')" dataType="int">Rank <i id="userscoresrank" class=""></i></th>
-								<th class="sortbutton" onclick="sortdata('userscoresname', 'userscores')" dataType="string">Username <i id="userscoresname" class=""></i></th>
-								<th class="sortbutton" onclick="sortdata('userscorestotal', 'userscores')" dataType="int">Total <i id="userscorestotal" class=""></i></th>
+								<th>Rank</th>
+								<th>Username</th>
+								<th>Total</i></th>
 							</tr>
 						</thead>
 						<tbody id='userscoresTableBody'>
 						</tbody>
 					</table>
 				</article>
+				
 				<!-- privacy -->
 				<article id="privacy" class="panel" style="width: 100%; margin: 0 auto;">
 					<h4>Stored Data</h4>
@@ -224,18 +335,19 @@
 			</div>
 
 			<!-- Footer -->
-			<div id="footer" style="text-align: center; padding: 2em 0 0 0; font-size: 0.75em;">
+			<footer id="footer" style="text-align: center; font-size: 0.75em;">
 				<div align="center"style="position:relative; bottom:0; width:100%; text-align:center; flex-shrink: 0;">
 					<div style="padding-bottom: 0.5%;">
-						<a href="https://discord.gg/cz5ECsdPBT" rel="nofollow noopener" title="Join the discord." target="_blank" style="padding-right: 0.5%;"><i class="fab fa-discord fa-lg"></i></a>
-						<a href="https://www.patreon.com/numselli" rel="nofollow noopener" title="Become a Patreon" target="_blank"><i class="fab fa-patreon fa-lg"></i></a>
+						<a href="https://top.gg/bot/726560538145849374" rel="nofollow noopener" title="Top.gg" target="_blank" style="padding-right: 0.5%; vertical-align: middle;"><img style="width: 1.3%;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzNyIgdmlld0JveD0iMCAwIDMwIDM3Ij4KICAgIDxnIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTIyLjAxIDcuODg2VjUuNDUyYy45Ny0uNTExIDEuNDc4LTEuNDYgMS40NzgtMi41MzFDMjMuNDg4IDEuMzE0IDIyLjE4IDAgMjAuNTgxIDBjLTEuNTk4IDAtMi45MDYgMS4zMTQtMi45MDYgMi45MiAwIDEuMDcxLjQ2IDEuOTk2IDEuNDI5IDIuNTA3djIuNDU5aC04LjcyVjUuNDI3YTIuOTI3IDIuOTI3IDAgMCAwIDEuNDMtMi41MDZDMTEuODEzIDEuMzE0IDEwLjUwNCAwIDguOTA2IDAgNy4zMDggMCA2IDEuMzE0IDYgMi45MmEyLjkgMi45IDAgMCAwIDEuNDc4IDIuNTMydjIuNDM0SDIyLjAxeiIvPgogICAgICAgIDxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTI2LjM4OSAxMGMxLjk0NCAwIDMuNTE4IDEuNTYzIDMuNjExIDMuNDAxVjM3bC0zLjYxMS0zLjg2SDMuNTE5QzEuNTc0IDMzLjE0IDAgMzEuNjY4IDAgMjkuNzM3VjEzLjQwMUMwIDExLjU2MyAxLjU3NCAxMCAzLjUxOSAxMGgyMi44N3pNMTEuNSAxOGgtM2MtLjgyNSAwLTEuNS42NzUtMS41IDEuNXYzYzAgLjgyNS42NzUgMS41IDEuNSAxLjVoM2MuODI1IDAgMS41LS42NzUgMS41LTEuNXYtM2MwLS44MjUtLjY3NS0xLjUtMS41LTEuNXptMTAgMGgtM2MtLjgyNSAwLTEuNS42NzUtMS41IDEuNXYzYzAgLjgyNS42NzUgMS41IDEuNSAxLjVoM2MuODI1IDAgMS41LS42NzUgMS41LTEuNXYtM2MwLS44MjUtLjY3NS0xLjUtMS41LTEuNXoiLz4KICAgIDwvZz4KPC9zdmc+Cg=="></a>
+						<a href="https://discord.gg/cz5ECsdPBT" rel="nofollow noopener" title="Join the discord." target="_blank" style="padding-right: 0.5%; vertical-align: middle;"><i class="fab fa-discord fa-lg"></i></a>
+						<a href="https://www.patreon.com/numselli" rel="nofollow noopener" title="Become a Patreon" target="_blank" style=" vertical-align: middle;"><i class="fab fa-patreon fa-lg"></i></a>
 					</div>
 					<div style="padding-top: 0.5%;"><a href="https://numselli.github.io" rel="nofollow noopener" title="My site." target="_blank"><span align="center">Made by numselli#6964</span></a></div>
 				</div>
-			</div>
+			</footer>
 		</div>
 
-		<!-- template js -->
+		<!-- template js and css -->
 		<script>
 			var breakpoints=function(){"use strict";function e(e){t.init(e)}var t={list:null,media:{},events:[],init:function(e){t.list=e,window.addEventListener("resize",t.poll),window.addEventListener("orientationchange",t.poll),window.addEventListener("load",t.poll),window.addEventListener("fullscreenchange",t.poll)},active:function(e){var n,a,s,i,r,d,c;if(!(e in t.media)){if(">="==e.substr(0,2)?(a="gte",n=e.substr(2)):"<="==e.substr(0,2)?(a="lte",n=e.substr(2)):">"==e.substr(0,1)?(a="gt",n=e.substr(1)):"<"==e.substr(0,1)?(a="lt",n=e.substr(1)):"!"==e.substr(0,1)?(a="not",n=e.substr(1)):(a="eq",n=e),n&&n in t.list)if(i=t.list[n],Array.isArray(i)){if(r=parseInt(i[0]),d=parseInt(i[1]),isNaN(r)){if(isNaN(d))return;c=i[1].substr(String(d).length)}else c=i[0].substr(String(r).length);if(isNaN(r))switch(a){case"gte":s="screen";break;case"lte":s="screen and (max-width: "+d+c+")";break;case"gt":s="screen and (min-width: "+(d+1)+c+")";break;case"lt":s="screen and (max-width: -1px)";break;case"not":s="screen and (min-width: "+(d+1)+c+")";break;default:s="screen and (max-width: "+d+c+")"}else if(isNaN(d))switch(a){case"gte":s="screen and (min-width: "+r+c+")";break;case"lte":s="screen";break;case"gt":s="screen and (max-width: -1px)";break;case"lt":s="screen and (max-width: "+(r-1)+c+")";break;case"not":s="screen and (max-width: "+(r-1)+c+")";break;default:s="screen and (min-width: "+r+c+")"}else switch(a){case"gte":s="screen and (min-width: "+r+c+")";break;case"lte":s="screen and (max-width: "+d+c+")";break;case"gt":s="screen and (min-width: "+(d+1)+c+")";break;case"lt":s="screen and (max-width: "+(r-1)+c+")";break;case"not":s="screen and (max-width: "+(r-1)+c+"), screen and (min-width: "+(d+1)+c+")";break;default:s="screen and (min-width: "+r+c+") and (max-width: "+d+c+")"}}else s="("==i.charAt(0)?"screen and "+i:i;t.media[e]=!!s&&s}return t.media[e]!==!1&&window.matchMedia(t.media[e]).matches},on:function(e,n){t.events.push({query:e,handler:n,state:!1}),t.active(e)&&n()},poll:function(){var e,n;for(e=0;e<t.events.length;e++)n=t.events[e],t.active(n.query)?n.state||(n.state=!0,n.handler()):n.state&&(n.state=!1)}};return e._=t,e.on=function(e,n){t.on(e,n)},e.active=function(e){return t.active(e)},e}();!function(e,t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?module.exports=t():e.breakpoints=t()}(this,function(){return breakpoints});
 			(function ($) {
@@ -284,5 +396,80 @@
 				});
 			})(jQuery);
 		</script>
+		<style>
+			html, body, div, span, h1, img, article, footer, header, nav, section {
+				margin: 0;
+				padding: 0;
+				border: 0;
+				font-size: 100%;
+				font: inherit;
+				vertical-align: baseline;
+				color: white;
+			}
+			article, footer, header, nav, section {
+				display: block;
+			}
+			body {
+				line-height: 1;
+				-webkit-text-size-adjust: none;
+			}
+
+			/* Basic */
+			html {
+				box-sizing: border-box;
+			}
+			*, *:before, *:after {
+				box-sizing: inherit;
+			}
+			@media screen and (max-width: 1680px) {
+				body {
+					font-size: 15pt;
+				}
+			}
+			@media screen and (max-width: 1280px) {
+				body {
+					font-size: 14pt;
+				}
+			}
+			@media screen and (max-width: 736px) {
+				body {
+					font-size: 12pt;
+				}
+			}
+			@media screen and (max-width: 360px) {
+				body{
+					font-size: 11pt;
+				}
+			}
+			
+			/* Main */
+			#main {
+				position: relative;
+				overflow: hidden;
+				width: 100%;
+				-moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+				-webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+				-ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+				transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+			}
+			#main > .panel {
+				-moz-transition: opacity 0.25s ease-in-out;
+				-webkit-transition: opacity 0.25s ease-in-out;
+				-ms-transition: opacity 0.25s ease-in-out;
+				transition: opacity 0.25s ease-in-out;
+				margin-bottom: 0;
+				position: relative;
+				padding: 3.5em 2.5em 2.5em 2.5em;
+				width: 100%;
+			}
+			#main > .panel.inactive {
+				opacity: 0;
+			}
+			@media screen and (max-width: 736px) {
+				#main > .panel {
+					padding: 2em 1.5em 1.5em 1.5em;
+				}
+			}
+		</style>
 	</body>
 </html>

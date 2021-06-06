@@ -11,6 +11,9 @@
 
 		<script src="assets/js/jquery.min.js"></script>
 		<script async src="https://arc.io/widget.min.js#vjBL7bu4"></script>
+		<!-- Cloudflare Web Analytics -->
+		<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fa12d49990fd430c9bae0e2693264a60"}'></script>
+		<!-- End Cloudflare Web Analytics -->
 
 		<link href="assets/css/fontawesome-all.min.css" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
@@ -291,7 +294,7 @@
 							<tr>
 								<th class="sortbutton">Icon</th>
 								<th onclick="sortdata(this)" class="sortbutton" dataType="string" name="name">Name <i id="name" class=""></i></th>
-								<th onclick="sortdata(this)" class="sortbutton" dataType="int" name="last_num">Current Score <i id="cs" class=""></i></th>
+								<th onclick="sortdata(this)" class="sortbutton" dataType="int" name="last_num">Current Score <i id="last_num" class=""></i></th>
 								<th onclick="sortdata(this)" class="sortbutton" dataType="int" name ="hs">High Score <i id="hs" class=""></i></th>
 							</tr>
 						</thead>

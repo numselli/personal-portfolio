@@ -427,8 +427,8 @@
 					
 					// init photogallery
 					case `photogallery`:
-						// let raw = await fetch('https://api.github.com/repos/numselli/numselli.github.io/contents/images/photogallery/')
-						let raw = await fetch('photogallery.json')
+						let raw = await fetch('https://api.github.com/repos/numselli/numselli.github.io/contents/images/photogallery/')
+// 						let raw = await fetch('photogallery.json')
 						let json = await raw.json()
 						await json.map(({name}) => {
 							$('#image-container').append(`<li class="li"><img src="/images/photogallery/${name}" alt="${name}" loading="lazy"></li>`)

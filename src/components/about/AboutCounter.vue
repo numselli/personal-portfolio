@@ -1,5 +1,7 @@
 <script>
 import counter from 'vue3-autocounter';
+import projects from '../../data/projects';
+
 export default {
 	components: {
 		counter,
@@ -10,8 +12,13 @@ export default {
 			experienceAmount: (new Date().getFullYear() - 2016),
 
 			githubTitle: 'Stars on GitHub',
+			githubAmount: 21,
+
 			feedbackTitle: 'Positive feedback',
+			feedbackAmount: 90,
+
 			projectsTitle: 'Projects completed',
+			projectsAmount: projects.length
 		};
 	},
 };
@@ -47,9 +54,9 @@ export default {
 				<counter
 					ref="counter"
 					:startAmount="0"
-					:endAmount="20"
+					:endAmount="githubAmount"
 					:duration="1"
-					suffix="k+"
+					suffix="+"
 					:autoinit="true"
 					@finished="alert(`Counting finished!`)"
 					class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
@@ -65,7 +72,7 @@ export default {
 				<counter
 					ref="counter"
 					:startAmount="0"
-					:endAmount="92"
+					:endAmount="feedbackAmount"
 					:duration="1"
 					suffix="%"
 					:autoinit="true"
@@ -84,7 +91,7 @@ export default {
 				<counter
 					ref="counter"
 					:startAmount="0"
-					:endAmount="77"
+					:endAmount="projectsAmount"
 					:duration="1"
 					:autoinit="true"
 					@finished="alert(`Counting finished!`)"

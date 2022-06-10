@@ -1,43 +1,21 @@
 <script>
-// import ThemeSwitcher from '../ThemeSwitcher';
 import feather from 'feather-icons';
 import AppHeaderLinks from './AppHeaderLinks.vue';
 
 export default {
 	components: {
-		// ThemeSwitcher,
 		AppHeaderLinks,
 	},
 	data() {
 		return {
+			isOpen: false,
+			theme: 'dark',
 		};
-	},
-
-	created() {
-		this.theme = localStorage.getItem('theme') || 'light';
 	},
 	mounted() {
 		feather.replace();
-		this.theme = localStorage.getItem('theme') || 'light';
 	},
 	methods: {
-		updateTheme(theme) {
-			this.theme = theme;
-		},
-		showModal() {
-			if (this.modal) {
-				// Stop screen scrolling
-				document
-					.getElementsByTagName('html')[0]
-					.classList.remove('overflow-y-hidden');
-				this.modal = false;
-			} else {
-				document
-					.getElementsByTagName('html')[0]
-					.classList.add('overflow-y-hidden');
-				this.modal = true;
-			}
-		},
 	},
 	updated() {
 		feather.replace();
@@ -55,28 +33,14 @@ export default {
 			<div class="flex justify-between items-center px-4 sm:px-0">
 				<!-- Header logos -->
 				<div>
-					<router-link to="/"
-						><img
-							v-if="theme === 'light'"
-							src="@/assets/images/logo-dark.svg"
-							class="w-36"
-							alt="Dark Logo"
-						/>
+					<router-link to="/">
 						<img
-							v-else
 							src="@/assets/images/logo-light.svg"
 							class="w-36"
 							alt="Light Logo"
 						/>
 					</router-link>
 				</div>
-
-				<!-- Theme switcher small screen -->
-				<theme-switcher
-					:theme="theme"
-					@themeChanged="updateTheme"
-					class="block sm:hidden bg-ternary-light dark:bg-ternary-dark hover:bg-hover-light dark:hover:bg-hover-dark hover:shadow-sm px-2.5 py-2 rounded-lg"
-				/>
 
 				<!-- Small screen hamburger menu -->
 				<div class="sm:hidden">
@@ -108,19 +72,7 @@ export default {
 			</div>
 
 			<!-- Header links -->
-			<AppHeaderLinks/>
-
-			<!-- Header right section buttons -->
-			<div
-				class="hidden sm:flex justify-between items-center flex-col md:flex-row"
-			>
-				<!-- Theme switcher large screen -->
-				<!-- <theme-switcher
-					:theme="theme"
-					@themeChanged="updateTheme"
-					class="ml-8 bg-primary-light dark:bg-ternary-dark px-3 py-2 shadow-sm rounded-xl cursor-pointer"
-				/> -->
-			</div>
+			<AppHeaderLinks :isOpen="isOpen" />
 		</div>
 	</nav>
 </template>

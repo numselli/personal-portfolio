@@ -5,15 +5,11 @@ export default {
 	name: 'Home',
 	data: () => {
 		return {
-			theme: '',
+			theme: 'dark',
 		};
-	},
-	created() {
-		this.theme = localStorage.getItem('theme') || 'light';
 	},
 	mounted() {
 		feather.replace();
-		this.theme = localStorage.getItem('theme') || 'light';
 	},
 	updated() {
 		feather.replace();
@@ -43,12 +39,6 @@ export default {
 		<!-- Banner right illustration -->
 		<div class="w-full md:w-2/3 text-right float-right">
 			<img
-				v-if="theme === 'light'"
-				src="@/assets/images/developer.svg"
-				alt="Developer"
-			/>
-			<img
-				v-else
 				src="@/assets/images/developer-dark.svg"
 				alt="Developer"
 			/>

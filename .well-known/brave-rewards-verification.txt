@@ -1,4 +1,0 @@
-This is a Brave Rewards publisher verification file.
-
-Domain: numselli.github.io
-Token: 8a2d0a23275f991d105a19304334d123c77e45df93c89eea7fc435fa0435e86d

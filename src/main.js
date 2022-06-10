@@ -11,6 +11,3 @@ createApp(App)
 	.use(router)
 	.use(BackToTop)
 	.mount('#app');
-
-document.querySelector('body').classList.add('bg-primary-dark');
-router.go();

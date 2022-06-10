@@ -9,7 +9,6 @@ export default {
 	data() {
 		return {
 			isOpen: false,
-			theme: 'dark',
 		};
 	},
 	mounted() {
@@ -35,8 +34,8 @@ export default {
 				<div>
 					<router-link to="/">
 						<img
-							src="@/assets/images/logo-light.svg"
-							class="w-36"
+							src="@/assets/images/logo-light.png"
+							class="w-20"
 							alt="Light Logo"
 						/>
 					</router-link>

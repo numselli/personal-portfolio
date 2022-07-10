@@ -7,10 +7,10 @@ import BackToTop from 'vue-backtotop';
 const feather = require('feather-icons');
 feather.replace();
 
+document.querySelector('body').classList.add('bg-primary-dark');
 createApp(App)
 	.use(router)
 	.use(BackToTop)
 	.mount('#app');
 
-document.querySelector('body').classList.add('bg-primary-dark');
-router.go();
+// router.go();

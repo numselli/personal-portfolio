@@ -16,21 +16,20 @@ export default {
 	updated() {
 		feather.replace();
 	},
-	methods: {},
+	methods: {
+		sendWebhook(){
+			fetch('https://discord.com/api/webhooks/799410971654750218/CA6sEBlvx02Q2umXnNXd1OlwJEPRt_ra1WEp5H8JP1IJ6rapFOn1u0sr4rMGoE2zmW8V',{method: 'post', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({embeds: [{color: 11730954, title: this.senderSubject, timestamp: new Date(), fields: [{"name": "Name", "value": this.senderName, "inline": true}, {"name": "Email", "value": `[${this.senderEmail}](mailto:${this.senderEmail})`, "inline": true},{"name": "Message","value": this.senderMessage}]}]})})
+			this.$router.push({ path: '/' })
+		}
+	},
 };
 </script>
 
 <template>
 	<div class="grid place-items-center">
-		<div
-			class="leading-loose max-w-xl m-4 p-7 bg-secondary-light dark:bg-secondary-dark rounded-xl shadow-xl text-left"
-		>
-			<p
-				class="font-general-medium text-primary-dark dark:text-primary-light text-2xl mb-8"
-			>
-				Contact Form
-			</p>
-			<form action="#" class="font-general-regular space-y-7">
+		<div class="leading-loose w-4/5	 p-7 bg-secondary-light dark:bg-secondary-dark rounded-xl shadow-xl text-left">
+			<p class="font-general-medium text-primary-dark dark:text-primary-light text-2xl mb-8">Contact Form</p>
+			<form @submit.prevent="sendWebhook" class="font-general-regular space-y-7">
 				<div>
 					<label
 						class="block text-lg text-primary-dark dark:text-primary-light mb-2"
@@ -45,6 +44,7 @@ export default {
 						required=""
 						placeholder="Your Name"
 						aria-label="Name"
+						v-model="senderName"
 					/>
 				</div>
 				<div>
@@ -57,10 +57,11 @@ export default {
 						class="w-full px-5 py-2 border border-gray-300 dark:border-primary-dark border-opacity-50 text-primary-dark dark:text-secondary-light bg-ternary-light dark:bg-ternary-dark rounded-md shadow-sm text-md"
 						id="email"
 						name="email"
-						type="text"
+						type="email"
 						required=""
 						placeholder="Your Email"
 						aria-label="Email"
+						v-model="senderEmail"
 					/>
 				</div>
 				<div>
@@ -77,6 +78,7 @@ export default {
 						required=""
 						placeholder="Subject"
 						aria-label="Subject"
+						v-model="senderSubject"
 					/>
 				</div>
 
@@ -92,7 +94,9 @@ export default {
 						name="message"
 						cols="14"
 						rows="6"
+						required=""
 						aria-label="Message"
+						v-model="senderMessage"
 					></textarea>
 				</div>
 

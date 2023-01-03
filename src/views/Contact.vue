@@ -1,10 +1,10 @@
 <script>
 import feather from 'feather-icons';
-import Button from '@/components/reusable/Button.vue';
+import customButton from '@/components/reusable/Button.vue';
 
 export default {
 	components: {
-		Button
+		customButton
 	},
 	data: () => {
 		return {
@@ -18,7 +18,7 @@ export default {
 	},
 	methods: {
 		sendWebhook(){
-			fetch('https://discord.com/api/webhooks/799410971654750218/CA6sEBlvx02Q2umXnNXd1OlwJEPRt_ra1WEp5H8JP1IJ6rapFOn1u0sr4rMGoE2zmW8V',{method: 'post', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({embeds: [{color: 11730954, title: this.senderSubject, timestamp: new Date(), fields: [{"name": "Name", "value": this.senderName, "inline": true}, {"name": "Email", "value": `[${this.senderEmail}](mailto:${this.senderEmail})`, "inline": true},{"name": "Message","value": this.senderMessage}]}]})})
+			fetch('https://discord.com/api/webhooks/1059911306192355391/CidYRJWrPsiiTMVSnNphg1UYzVKSMajTyn9WTgLFRswh52NBOcmmDPMXLcOL-W8p8T0z',{method: 'post', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({embeds: [{color: 11730954, title: this.senderSubject, timestamp: new Date(), fields: [{"name": "Name", "value": this.senderName, "inline": true}, {"name": "Email", "value": `[${this.senderEmail}](mailto:${this.senderEmail})`, "inline": true},{"name": "Message","value": this.senderMessage}]}]})})
 			this.$router.push({ path: '/' })
 		}
 	},
@@ -101,7 +101,7 @@ export default {
 				</div>
 
 				<div>
-					<Button
+					<customButton
 						title="Send Message"
 						class="px-4 py-2.5 text-white tracking-wider bg-indigo-500 hover:bg-indigo-600 focus:ring-1 focus:ring-indigo-900 rounded-lg duration-500"
 						type="submit"

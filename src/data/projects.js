@@ -9,66 +9,57 @@ const projects = [
 			description: [
 				{
 					id: 1,
-					details: "Discord Chainmail is meant to inform people about fake chain messages on the chat platform Discord. This website was inspired by seeing one of these chain messages and being so frustrated that people believe them. Instead of addressing these messages individually, I decided to create this site to address them all at once. This site primarily focuses on examples from the Discord platform but lots of the points made can apply to other platforms.",
+					details: "Counting was originally made as a clone of the most popular counting bot, counting#5250 made by Duck and tt2468. I was cloning counting#5250 because It was (and still is) missing the levels of customization options that I wanted and I thought I could make a better version of it. Counting originally launched on January 17th, 2020 for a few friends and was not taken to seriously, on Jun 27, 2020 the original bot was deleted and re-launched on June 27th, 2020, the relaunched version I took seriously. I started working on unique features that users asked for, taking the project from a clone to its own unique product.",
+				},
+				{
+					id: 2,
+					details: "Counting was a big project because when I started I did not have a lot experience with the programs that were required. As time went on and I made improvements, I ended up learning a ton. I learnt all about databases, optimized code, front end development, core programming concepts, server clustering, and the list goes on. Almost everything I know about code development has been learnt because of this bot in some way.",
+				},
+				{
+					id: 3,
+					details: "Since launching it the bot has grown to 10,720 guilds (discord servers) and 135,430 users as of January 3rd 2023. When I took up this project I did not think it would turn out to be anything special, three years later I am still amazed at the stats every time I look at them.",
 				}
 			],
 			status: "Active",
 			images: [
 				{
 					id: 1,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/ui-project-1.jpg'),
+					title: 'Icon',
+					img: require('@/assets/images/projects/counting/icon.png'),
 				},
 				{
 					id: 2,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/web-project-2.jpg'),
+					title: 'Slightly more advanced usage',
+					img: require('@/assets/images/projects/counting/slightlyMoreAdvancedUsage.png'),
 				},
 				{
 					id: 3,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/mobile-project-2.jpg'),
+					title: 'Basic usage',
+					img: require('@/assets/images/projects/counting/basicUsage.png'),
 				}
 			],
 			tools: [
 				"Node.js",
 				"JavaScript",
-				"Eris fleet",
-				"Eris",
+				"Oceanic-fleet",
+				"Oceanic",
 				"PostgreSQL",
 				"Vue.js",
-				"Cloudflare pages"
+				"Docker",
+				"Proxmox"
 			],
 			links: [
 				{
 					id: 1,
-					name: 'Twitter',
-					icon: 'twitter',
-					url: 'https://twitter.com/realstoman',
+					name: 'Website',
+					icon: 'external-link',
+					url: 'https://counting.numselli.xyz',
 				},
 				{
 					id: 2,
-					name: 'Instagram',
-					icon: 'instagram',
-					url: 'https://instagram.com/realstoman',
-				},
-				{
-					id: 3,
-					name: 'Facebook',
-					icon: 'facebook',
-					url: 'https://facebook.com/',
-				},
-				{
-					id: 4,
-					name: 'LinkedIn',
-					icon: 'linkedin',
-					url: 'https://linkedin.com/',
-				},
-				{
-					id: 5,
-					name: 'Youtube',
-					icon: 'youtube',
-					url: 'https://www.youtube.com/c/StomanStudio',
+					name: 'GitHub',
+					icon: 'github',
+					url: 'https://github.com/counting-bot',
 				}
 			]
 		}
@@ -88,21 +79,6 @@ const projects = [
 			],
 			status: "Completed",
 			images: [
-				{
-					id: 1,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/ui-project-1.jpg'),
-				},
-				{
-					id: 2,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/web-project-2.jpg'),
-				},
-				{
-					id: 3,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/mobile-project-2.jpg'),
-				}
 			],
 			tools: [
 				"Node.js",
@@ -159,21 +135,6 @@ const projects = [
 			],
 			status: "Completed",
 			images: [
-				{
-					id: 1,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/ui-project-1.jpg'),
-				},
-				{
-					id: 2,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/web-project-2.jpg'),
-				},
-				{
-					id: 3,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/mobile-project-2.jpg'),
-				}
 			],
 			tools: [
 				"Node.js",
@@ -293,7 +254,7 @@ const projects = [
 			description: [
 				{
 					id: 1,
-					details: "Discord Chainmail is meant to inform people about fake chain messages on the chat platform Discord. This website was inspired by seeing one of these chain messages and being so frustrated that people believe them. Instead of addressing these messages individually, I decided to create this site to address them all at once. This site primarily focuses on examples from the Discord platform but lots of the points made can apply to other platforms.",
+					details: "This mario like game was made for a Under the GUI Unity class.",
 				}
 			],
 			status: "Completed",
@@ -362,7 +323,7 @@ const projects = [
 			description: [
 				{
 					id: 1,
-					details: "Discord Chainmail is meant to inform people about fake chain messages on the chat platform Discord. This website was inspired by seeing one of these chain messages and being so frustrated that people believe them. Instead of addressing these messages individually, I decided to create this site to address them all at once. This site primarily focuses on examples from the Discord platform but lots of the points made can apply to other platforms.",
+					details: "This mario like game was made for a Under the GUI Unity class.",
 				}
 			],
 			status: "Canceled",

@@ -60,7 +60,15 @@ const projects = [
 					name: 'GitHub',
 					icon: 'github',
 					url: 'https://github.com/counting-bot',
+				},
+				{
+					id: 3,
+					name: 'Invite',
+					icon: 'user-plus',
+					url: 'https://counting.numselli.xyz/invite',
 				}
+
+				
 			]
 		}
 	},
@@ -89,33 +97,15 @@ const projects = [
 			links: [
 				{
 					id: 1,
-					name: 'Twitter',
-					icon: 'twitter',
-					url: 'https://twitter.com/realstoman',
+					name: 'GitHub repo',
+					icon: 'github',
+					url: 'https://github.com/numselli/Kohana',
 				},
 				{
 					id: 2,
-					name: 'Instagram',
-					icon: 'instagram',
-					url: 'https://instagram.com/realstoman',
-				},
-				{
-					id: 3,
-					name: 'Facebook',
-					icon: 'facebook',
-					url: 'https://facebook.com/',
-				},
-				{
-					id: 4,
-					name: 'LinkedIn',
-					icon: 'linkedin',
-					url: 'https://linkedin.com/',
-				},
-				{
-					id: 5,
-					name: 'Youtube',
-					icon: 'youtube',
-					url: 'https://www.youtube.com/c/StomanStudio',
+					name: 'Invite',
+					icon: 'user-plus',
+					url: 'https://discord.com/oauth2/authorize?client_id=763088956454994000&scope=applications.commands',
 				}
 			]
 		}
@@ -144,33 +134,15 @@ const projects = [
 			links: [
 				{
 					id: 1,
-					name: 'Twitter',
-					icon: 'twitter',
-					url: 'https://twitter.com/realstoman',
+					name: 'GitHub repo',
+					icon: 'github',
+					url: 'https://github.com/numselli/redditGifFix',
 				},
 				{
 					id: 2,
-					name: 'Instagram',
-					icon: 'instagram',
-					url: 'https://instagram.com/realstoman',
-				},
-				{
-					id: 3,
-					name: 'Facebook',
-					icon: 'facebook',
-					url: 'https://facebook.com/',
-				},
-				{
-					id: 4,
-					name: 'LinkedIn',
-					icon: 'linkedin',
-					url: 'https://linkedin.com/',
-				},
-				{
-					id: 5,
-					name: 'Youtube',
-					icon: 'youtube',
-					url: 'https://www.youtube.com/c/StomanStudio',
+					name: 'Invite',
+					icon: 'user-plus',
+					url: 'https://discord.com/oauth2/authorize?client_id=961376176541138944&permissions=83968&scope=bot',
 				}
 			]
 		}
@@ -192,18 +164,13 @@ const projects = [
 			images: [
 				{
 					id: 1,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/ui-project-1.jpg'),
+					title: 'Main page of game',
+					img: require('@/assets/images/projects/loading/mainApp.png'),
 				},
 				{
 					id: 2,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/web-project-2.jpg'),
-				},
-				{
-					id: 3,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/mobile-project-2.jpg'),
+					title: 'Settings menu',
+					img: require('@/assets/images/projects/loading/appSettings.png'),
 				}
 			],
 			tools: [
@@ -213,33 +180,21 @@ const projects = [
 			links: [
 				{
 					id: 1,
-					name: 'Twitter',
-					icon: 'twitter',
-					url: 'https://twitter.com/realstoman',
+					name: 'GitHub repo',
+					icon: 'github',
+					url: 'https://github.com/numselli/loading-game',
 				},
 				{
 					id: 2,
-					name: 'Instagram',
-					icon: 'instagram',
-					url: 'https://instagram.com/realstoman',
+					name: 'Play',
+					icon: 'external-link',
+					url: 'https://loading.numselli.xyz/',
 				},
 				{
 					id: 3,
-					name: 'Facebook',
-					icon: 'facebook',
-					url: 'https://facebook.com/',
-				},
-				{
-					id: 4,
-					name: 'LinkedIn',
-					icon: 'linkedin',
-					url: 'https://linkedin.com/',
-				},
-				{
-					id: 5,
-					name: 'Youtube',
-					icon: 'youtube',
-					url: 'https://www.youtube.com/c/StomanStudio',
+					name: 'Play',
+					icon: 'shopping-bag',
+					url: 'https://apps.microsoft.com/store/detail/infinite-loading/9NRV20M1SGRR',
 				}
 			]
 		}
@@ -254,25 +209,25 @@ const projects = [
 			description: [
 				{
 					id: 1,
-					details: "This mario like game was made for a Under the GUI Unity class.",
+					details: "This mario like game with randomly generated levels was made for a Under the GUI Unity class.",
 				}
 			],
 			status: "Completed",
 			images: [
 				{
 					id: 1,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/ui-project-1.jpg'),
+					title: 'Level 0 not possable',
+					img: require('@/assets/images/projects/platformer/level0NotPossable.png'),
 				},
 				{
 					id: 2,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/web-project-2.jpg'),
+					title: 'level 0 close to win',
+					img: require('@/assets/images/projects/platformer/level0CloseToWin.png'),
 				},
 				{
 					id: 3,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/mobile-project-2.jpg'),
+					title: 'Level 0 win',
+					img: require('@/assets/images/projects/platformer/level0Win.png'),
 				}
 			],
 			tools: [
@@ -282,33 +237,15 @@ const projects = [
 			links: [
 				{
 					id: 1,
-					name: 'Twitter',
-					icon: 'twitter',
-					url: 'https://twitter.com/realstoman',
+					name: 'GitHub repo',
+					icon: 'github',
+					url: 'https://github.com/numselli/platformer-game',
 				},
 				{
 					id: 2,
-					name: 'Instagram',
-					icon: 'instagram',
-					url: 'https://instagram.com/realstoman',
-				},
-				{
-					id: 3,
-					name: 'Facebook',
-					icon: 'facebook',
-					url: 'https://facebook.com/',
-				},
-				{
-					id: 4,
-					name: 'LinkedIn',
-					icon: 'linkedin',
-					url: 'https://linkedin.com/',
-				},
-				{
-					id: 5,
-					name: 'Youtube',
-					icon: 'youtube',
-					url: 'https://www.youtube.com/c/StomanStudio',
+					name: 'Play',
+					icon: 'external-link',
+					url: 'https://platformer.numselli.xyz/',
 				}
 			]
 		}
@@ -323,26 +260,11 @@ const projects = [
 			description: [
 				{
 					id: 1,
-					details: "This mario like game was made for a Under the GUI Unity class.",
+					details: "An alien shooter style game based around memes. This game was made for a Under the GUI Unity class.",
 				}
 			],
 			status: "Canceled",
 			images: [
-				{
-					id: 1,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/ui-project-1.jpg'),
-				},
-				{
-					id: 2,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/web-project-2.jpg'),
-				},
-				{
-					id: 3,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/mobile-project-2.jpg'),
-				}
 			],
 			tools: [
 				"Unity",
@@ -351,33 +273,15 @@ const projects = [
 			links: [
 				{
 					id: 1,
-					name: 'Twitter',
-					icon: 'twitter',
-					url: 'https://twitter.com/realstoman',
+					name: 'GitHub repo',
+					icon: 'github',
+					url: 'https://github.com/numselli/meme-shooter-game',
 				},
 				{
 					id: 2,
-					name: 'Instagram',
-					icon: 'instagram',
-					url: 'https://instagram.com/realstoman',
-				},
-				{
-					id: 3,
-					name: 'Facebook',
-					icon: 'facebook',
-					url: 'https://facebook.com/',
-				},
-				{
-					id: 4,
-					name: 'LinkedIn',
-					icon: 'linkedin',
-					url: 'https://linkedin.com/',
-				},
-				{
-					id: 5,
-					name: 'Youtube',
-					icon: 'youtube',
-					url: 'https://www.youtube.com/c/StomanStudio',
+					name: 'Play',
+					icon: 'external-link',
+					url: 'https://meme-shooter.numselli.xyz/',
 				}
 			]
 		}
@@ -403,18 +307,13 @@ const projects = [
 			images: [
 				{
 					id: 1,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/ui-project-1.jpg'),
+					title: 'Image of landing page',
+					img: require('@/assets/images/projects/xdhacks/landingPage.png'),
 				},
 				{
 					id: 2,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/web-project-2.jpg'),
-				},
-				{
-					id: 3,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/mobile-project-2.jpg'),
+					title: 'Image of end page',
+					img: require('@/assets/images/projects/xdhacks/endPage.png'),
 				}
 			],
 			tools: [
@@ -426,33 +325,15 @@ const projects = [
 			links: [
 				{
 					id: 1,
-					name: 'Twitter',
-					icon: 'twitter',
-					url: 'https://twitter.com/realstoman',
+					name: 'GitHub',
+					icon: 'github',
+					url: 'https://github.com/numselli/XdHacks',
 				},
 				{
 					id: 2,
-					name: 'Instagram',
-					icon: 'instagram',
-					url: 'https://instagram.com/realstoman',
-				},
-				{
-					id: 3,
-					name: 'Facebook',
-					icon: 'facebook',
-					url: 'https://facebook.com/',
-				},
-				{
-					id: 4,
-					name: 'LinkedIn',
-					icon: 'linkedin',
-					url: 'https://linkedin.com/',
-				},
-				{
-					id: 5,
-					name: 'Youtube',
-					icon: 'youtube',
-					url: 'https://www.youtube.com/c/StomanStudio',
+					name: 'Website',
+					icon: 'external-link',
+					url: 'https://xdhacks.numselli.xyz/Climate%20Code%202021/Hackathon/',
 				}
 			]
 		}
@@ -475,17 +356,12 @@ const projects = [
 				{
 					id: 1,
 					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/ui-project-1.jpg'),
+					img: require('@/assets/images/projects/chainmail/startOfPage.png'),
 				},
 				{
 					id: 2,
 					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/web-project-2.jpg'),
-				},
-				{
-					id: 3,
-					title: 'Kabul Project Management UI',
-					img: require('@/assets/images/mobile-project-2.jpg'),
+					img: require('@/assets/images/projects/chainmail/endOfPage.png'),
 				}
 			],
 			tools: [
@@ -497,33 +373,15 @@ const projects = [
 			links: [
 				{
 					id: 1,
-					name: 'Twitter',
+					name: 'GitHub',
 					icon: 'twitter',
-					url: 'https://twitter.com/realstoman',
+					url: 'https://github.com/numselli/discord-chainmail',
 				},
 				{
 					id: 2,
-					name: 'Instagram',
+					name: 'Website',
 					icon: 'instagram',
-					url: 'https://instagram.com/realstoman',
-				},
-				{
-					id: 3,
-					name: 'Facebook',
-					icon: 'facebook',
-					url: 'https://facebook.com/',
-				},
-				{
-					id: 4,
-					name: 'LinkedIn',
-					icon: 'linkedin',
-					url: 'https://linkedin.com/',
-				},
-				{
-					id: 5,
-					name: 'Youtube',
-					icon: 'youtube',
-					url: 'https://www.youtube.com/c/StomanStudio',
+					url: 'https://discord-chainmail.numselli.xyz/',
 				}
 			]
 		}

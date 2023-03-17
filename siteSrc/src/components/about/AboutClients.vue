@@ -11,44 +11,14 @@ export default {
 			clients: [
 				{
 					id: 1,
-					title: 'Amazon',
-					img: require('@/assets/images/brands/amazon_gray.png'),
+					title: 'Bench Accounting',
+					img: require('@/assets/images/brands/bench.svg'),
 				},
 				{
 					id: 2,
-					title: 'Sony',
-					img: require('@/assets/images/brands/sony_gray.png'),
-				},
-				{
-					id: 3,
-					title: 'Adidas',
-					img: require('@/assets/images/brands/adidas_gray.png'),
-				},
-				{
-					id: 4,
-					title: 'FILA',
-					img: require('@/assets/images/brands/fila_gray.png'),
-				},
-				{
-					id: 5,
-					title: 'NB',
-					img: require('@/assets/images/brands/nb_gray.png'),
-				},
-				{
-					id: 6,
-					title: 'SAMSUNG',
-					img: require('@/assets/images/brands/samsung_gray.png'),
-				},
-				{
-					id: 7,
-					title: 'CANON',
-					img: require('@/assets/images/brands/canon_gray.png'),
-				},
-				{
-					id: 7,
-					title: 'PUMA',
-					img: require('@/assets/images/brands/puma_gray.png'),
-				},
+					title: 'Sounds Good',
+					img: require('@/assets/images/brands/soundsgood.png'),
+				}
 			],
 		};
 	},

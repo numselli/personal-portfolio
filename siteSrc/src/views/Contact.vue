@@ -18,7 +18,7 @@ export default {
 	},
 	methods: {
 		sendWebhook(){
-			fetch('https://discord.com/api/webhooks/1059911306192355391/CidYRJWrPsiiTMVSnNphg1UYzVKSMajTyn9WTgLFRswh52NBOcmmDPMXLcOL-W8p8T0z',{method: 'post', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({embeds: [{color: 11730954, title: this.senderSubject, timestamp: new Date(), fields: [{"name": "Name", "value": this.senderName, "inline": true}, {"name": "Email", "value": `[${this.senderEmail}](mailto:${this.senderEmail})`, "inline": true},{"name": "Message","value": this.senderMessage}]}]})})
+			fetch('/api/contact/webhook',{method: 'post', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({"subject": this.senderSubject, "name": this.senderName, "email": this.senderEmail, "message": this.senderMessage})})
 			this.$router.push({ path: '/' })
 		}
 	},

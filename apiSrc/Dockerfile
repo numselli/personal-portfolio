@@ -1,4 +1,4 @@
-FROM node:19.6.1-alpine3.16
+FROM node:20.2.0-alpine3.17
 
 EXPOSE 8090
 

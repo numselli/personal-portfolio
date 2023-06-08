@@ -11,8 +11,6 @@ services:
     container_name: api
     volumes:
       - apiConfig:/config
-    ports:
-      - 8010:8010
 
   site:
     restart: unless-stopped

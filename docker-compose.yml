@@ -1,22 +1,9 @@
 version: "3"
-
-volumes:
-  apiConfig:
-    external: true
     
 services:
-  api:
-    restart: unless-stopped
-    build: ./apiSrc
-    container_name: api
-    volumes:
-      - apiConfig:/config
-
   site:
     restart: unless-stopped
-    build: ./siteSrc
+    build: ./src
     container_name: site
-    depends_on:
-      - api
     ports:
-      - 80:80
+      - 3000:3000

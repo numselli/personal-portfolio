@@ -1,9 +1,42 @@
 version: "3"
-    
+
+# volumes:
+#   dbData:
+#     external: true
+
 services:
-  site:
+  # site:
+  #   restart: unless-stopped
+  #   build: ./src
+  #   container_name: site
+  #   ports:
+  #     - 3000:3000
+
+  postgres:
     restart: unless-stopped
-    build: ./src
-    container_name: site
+    image: postgres:15.2-alpine
+    environment:
+      - POSTGRES_USER=personalPortfolio
+      - POSTGRES_PASSWORD=AQwrMb4WzngykR9v
+      - POSTGRES_DB=personalPortfolio
     ports:
-      - 3000:3000
+      - 5436:5432
+    volumes:
+      - ./schema.postgresql.sql:/docker-entrypoint-initdb.d/schema.postgresql.sql:ro
+    #   - dbData:/var/lib/postgresql/data
+    container_name: DB
+
+  minio:
+    container_name: minio
+    image: minio/minio
+    command: server -C /etc/minio --address ":9000" --console-address ":9002" /data
+    ports:
+      - "9000:9000"
+      - "9002:9002"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    # volumes:
+    #   - minio:/data
+    #   - /etc/minio:/root/.minio/
+    #   - /etc/minio:/etc/minio/

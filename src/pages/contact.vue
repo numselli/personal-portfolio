@@ -1,8 +1,5 @@
 <template>
-  <background></background>
-  <headerBar></headerBar>
-
-  <div class="container grey darken-3" id="main">
+  <div class="container grey darken-3">
     <form @submit.prevent="submitF">
       <div>
         <label for="name" class="white-text">Full Name</label>
@@ -29,43 +26,26 @@
       </button>
     </form>
   </div>
-
-  <footerBar></footerBar>
 </template>
 
 <script>
-import headerBar from '../components/header.vue'
-import footerBar from '../components/footer.vue'
-import background from '../components/background.vue';
+  export default {
+    name: 'contact',
+    "methods": {
+      async submitF() {
+        const newRefs = {}
+        Object.keys(this.$refs).forEach(k => newRefs[k] = this.$refs[k].value)
+        await $fetch('/api/contact/webhook', {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: 'POST',
+          body: newRefs
+        })
+        this.$M.toast({text: 'Sent!!'})
 
-export default {
-  name: 'contact',
-  components: {
-    headerBar,
-    footerBar,
-    background
-  },
-  "methods": {
-    async submitF() {
-      const newRefs = {}
-      Object.keys(this.$refs).forEach(k => newRefs[k] = this.$refs[k].value)
-      await $fetch('/api/contact/webhook', {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: 'POST',
-        body: newRefs
-      })
-      this.$M.toast({text: 'Sent!!'})
-
-      return await navigateTo(this.$route.fullPath.substring(0, this.$route.fullPath.lastIndexOf('/')))
+        return await navigateTo(this.$route.fullPath.substring(0, this.$route.fullPath.lastIndexOf('/')))
+      }
     }
   }
-}
 </script>
-
-<style>
-#main {
-  min-height: calc(100vh - 255px);
-}
-</style>

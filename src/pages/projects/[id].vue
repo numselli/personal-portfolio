@@ -1,41 +1,64 @@
 <template>
-    <background></background>
-    <headerBar></headerBar>
+    <div class="container">
+        <h3 class="white-text">{{ project.name }}</h3>
+        <h3 class="white-text">Status: {{ project.status }}</h3>
 
-    <div class="container" id="main">
-        <span class="white-text">{{ $route.params.id }}</span>
 
-        <p class="white-text">{{ project }}</p>
+        <div class="row">
+            <div>
+                <!-- <h6 class="white-text"><font-awesome-icon class="white-text" :icon="['fa', 'clock']" /> {{ new
+                    Date(project.extededDescription.date).toLocaleDateString() }}</h6> -->
+            </div>
+            <div>
+                <!-- <h6 class="white-text"><font-awesome-icon class="white-text" :icon="['fas', 'tags']" /> {{ project.category }}</h6> -->
+            </div>
+        </div>
+
+
+
+
+        <div>
+            <span class="white-text">images</span>
+        </div>
+
+
+        <div class="row">
+            <div class="col s3">
+                <div>
+                    <h6 class="white-text">Tools & Technologies</h6>
+                </div>
+
+                <div>
+                    <h6 class="white-text">Links</h6>
+                </div>
+                <!-- Grey navigation panel -->
+            </div>
+
+            <div class="col s9">
+                <div>
+                    <h6 class="white-text">About</h6>
+                </div>
+                <!-- <p>{{ project.description }}</p> -->
+                <!-- Teal page content  -->
+            </div>
+        </div>
+        
+        <p class="white-text">{{ project.description }}</p>
     </div>
-
-    <footerBar></footerBar>
 </template>
 
 <script>
-import headerBar from '../../components/header.vue'
-import footerBar from '../../components/footer.vue'
-import background from '../../components/background.vue';
-import projectList from '../../public/projects/all.mjs'
-
-
 export default {
     name: 'projects',
-    components: {
-        headerBar,
-        footerBar,
-        background,
-    },
-
     data() {
         return {
-            project: projectList[projectList.findIndex(p=>p.id===this.$route.params.id)]
+            project: {}
+            // project: projectList[projectList.findIndex(p => p.id === this.$route.params.id)]
         }
+    },
+    async mounted(){
+        const rawProjects = await fetch(`/api/projects/${this.$route.params.id}`)
+        this.project = await rawProjects.json()
     }
 }
 </script>
-
-<style>
-  #main{
-    min-height: calc(100vh - 255px);
-  }
-</style>

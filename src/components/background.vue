@@ -1,7 +1,7 @@
 <template>
-    <div style="position: absolute; z-index: -100;" class="grey darken-4">
+    <!-- <div style="position: absolute; z-index: -100;" class="grey darken-4"> -->
         <div ref="myDiv"></div>
-    </div>
+    <!-- </div> -->
 </template>
   
 <script>
